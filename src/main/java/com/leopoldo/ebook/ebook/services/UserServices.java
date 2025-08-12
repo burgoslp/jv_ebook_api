@@ -10,6 +10,8 @@ import com.leopoldo.ebook.ebook.dtos.Json.JsonApiResponse;
 import com.leopoldo.ebook.ebook.dtos.User.UserCreateDto;
 import com.leopoldo.ebook.ebook.dtos.User.UserDetailsDto;
 import com.leopoldo.ebook.ebook.dtos.User.UserSumaryDto;
+import com.leopoldo.ebook.ebook.exeptions.ApiError;
+import com.leopoldo.ebook.ebook.exeptions.ApiException;
 import com.leopoldo.ebook.ebook.models.Role;
 import com.leopoldo.ebook.ebook.models.User;
 import com.leopoldo.ebook.ebook.repositories.IRoleRepository;
@@ -27,6 +29,9 @@ public class UserServices implements IUserServices {
     private IRoleRepository rr;
 
     @Autowired
+    private EmailServices emailService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -38,24 +43,39 @@ public class UserServices implements IUserServices {
         Optional<Role> rol = rr.findByName("ROLE_USER");
         List<Role> rolesList = new ArrayList<>();
          
-        rol.ifPresent(rolesList::add);
+        rol.ifPresentOrElse(r ->{
+            rolesList.add(r);
+        },()->{
+                throw new ApiException(ApiError.ROLE_BYNAME_NOT_FOUND);
+        });
 
         if(userCreateDto.isAdmin){
             Optional<Role> rolAdmin = rr.findByName("ROLE_ADMIN");
-            rolAdmin.ifPresent(rolesList::add);
+            rolAdmin.ifPresentOrElse(r ->{
+                rolesList.add(r);
+            }, () -> {
+                throw new ApiException(ApiError.ROLE_BYNAME_NOT_FOUND);
+            });
         }
 
         User user = User.builder()
                 .username(userCreateDto.getUsername())
                 .password(passwordEncoder.encode(userCreateDto.getPassword()))
+                .email(userCreateDto.getEmail())
                 .isAdmin(userCreateDto.isAdmin)
                 .roles(rolesList)
                 .build();
-        
+
+        // registro del usuario y conversion a DTO
+        UserDetailsDto usuarioDetailsDto = (UserDetailsDto) map.mapToDto(ur.save(user), UserDetailsDto.class);
+
+        // Enviar correo de confirmación
+        emailService.sendEmail(usuarioDetailsDto.getEmail(), "Registro exitoso EBOOK", "Hola "+ usuarioDetailsDto.getUsername() +", tu registro fue exitoso.");
+
         return JsonApiResponse.builder()
                 .code(HttpStatus.CREATED.value())
                 .message("Usuario creado correctamente")
-                .data(map.mapToDto(ur.save(user), UserDetailsDto.class))
+                .data(usuarioDetailsDto)
                 .build();
     }
 
@@ -71,8 +91,16 @@ public class UserServices implements IUserServices {
 
     @Override
     public JsonApiResponse findById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+        
+        Optional<User> user = ur.findById(id);
+
+        return JsonApiResponse.builder()
+                .code(HttpStatus.OK.value())
+                .message("Usuario encontrado")
+                .data(
+                    map.mapToDto(user.orElseThrow(() -> new ApiException(ApiError.USER_BYID_NOT_FOUND)), UserSumaryDto.class)
+                )
+                .build();
     }
 
     

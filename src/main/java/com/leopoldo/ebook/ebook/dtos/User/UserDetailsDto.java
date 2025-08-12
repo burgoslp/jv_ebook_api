@@ -22,6 +22,9 @@ public class UserDetailsDto {
     private String username;
     @NotBlank
     private String password;
+    @NotBlank
+    private String email;
+    
     private List<Role> roles;
 
 
