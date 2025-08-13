@@ -1,1 +1,1 @@
-<img width="1672" height="498" alt="EBOOKPORTADA" src="https://github.com/user-attachments/assets/f6550163-d100-403d-9ada-a2ec41b0073e" />
+<img width="1674" height="502" alt="EBOOKPORTADA" src="https://github.com/user-attachments/assets/7e8c546b-eaa7-43ef-babe-12f5b482170b" />
