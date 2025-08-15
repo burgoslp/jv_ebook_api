@@ -58,6 +58,7 @@ public class User {
     inverseJoinColumns = @JoinColumn(name = "book_id")
     )
     private List<Book> likes;
-    @OneToMany(mappedBy = "user")
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
 }

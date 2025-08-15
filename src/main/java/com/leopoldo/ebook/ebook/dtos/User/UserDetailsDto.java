@@ -24,7 +24,6 @@ public class UserDetailsDto {
     private String password;
     @NotBlank
     private String email;
-    
     private List<Role> roles;
 
 

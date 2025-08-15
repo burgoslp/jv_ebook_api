@@ -74,7 +74,7 @@ public class UserServices implements IUserServices {
 
         return JsonApiResponse.builder()
                 .code(HttpStatus.CREATED.value())
-                .message("Usuario creado correctamente")
+                .message(HttpStatus.CREATED.getReasonPhrase())
                 .data(usuarioDetailsDto)
                 .build();
     }
@@ -86,7 +86,8 @@ public class UserServices implements IUserServices {
                             .builder()
                             .code(HttpStatus.OK.value())
                             .message("Lista de usuarios")
-                            .data(map.mapToDto((List<User>)ur.findAll(), UserSumaryDto.class)).build();
+                            .data(map.mapToDto((List<User>)ur.findAll(), UserSumaryDto.class))
+                            .build();
     }
 
     @Override
@@ -102,6 +103,29 @@ public class UserServices implements IUserServices {
                 )
                 .build();
     }
+
+    @Override
+    public JsonApiResponse delete(Long id) {
+        
+        Optional<User> OptionalUser= ur.findById(id);
+
+        OptionalUser.ifPresentOrElse(user ->{
+
+           ur.delete(user);
+
+        }, ()->{
+            throw new ApiException(ApiError.USER_BYID_NOT_FOUND);
+        });
+
+        return JsonApiResponse.builder()
+                .code(HttpStatus.OK.value())
+                .message(HttpStatus.OK.getReasonPhrase())
+                .data("Usuario eliminado")
+                .build();
+
+    }
+
+    
 
     
 

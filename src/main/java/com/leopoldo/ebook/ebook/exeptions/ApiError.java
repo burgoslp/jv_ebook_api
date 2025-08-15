@@ -4,8 +4,11 @@ import org.springframework.http.HttpStatus;
 
 public enum ApiError {
 
-    ARGUMENTS_VALIDATION_ERROR(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, "Algunos de los valores ingresados no son correctos",List.of("")),
+    ARGUMENTS_VALIDATION_ERROR(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, "Algunos de los argumentos ingresados no son correctos",List.of("")),
     USER_BYID_NOT_FOUND(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, "No se encontró el usuario por id",List.of("")),
+    BOOK_BYID_NOT_FOUND(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, "No se encontró el libro por id",List.of("")),
+    AUTHOR_BYID_NOT_FOUND(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, "No se encontró el autor por id",List.of("")),
+    CATEGORY_BYID_NOT_FOUND(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, "No se encontró la categoría por id",List.of("")),
     ROLE_BYNAME_NOT_FOUND(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, "No se encontró el rol por nombre",List.of(""));
 
     private final Integer code;
