@@ -7,4 +7,7 @@ public interface IAuthorServices {
     JsonApiResponse save(AuthorCreateDto authorCreateDto); 
     JsonApiResponse findAll();
     JsonApiResponse findById(Long id);
+    JsonApiResponse deleteById(Long id);
+    JsonApiResponse addBook(Long authorId, Long bookId);
+    JsonApiResponse deleteBook(Long authorId, Long bookId);
 }

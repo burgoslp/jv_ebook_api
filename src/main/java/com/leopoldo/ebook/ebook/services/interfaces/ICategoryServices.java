@@ -7,5 +7,5 @@ public interface ICategoryServices {
 
     JsonApiResponse save(CategoryCreateDto categoryCreateDto);
     JsonApiResponse findAll();
-    JsonApiResponse delete(Long id);
+    JsonApiResponse deleteById(Long id);
 }

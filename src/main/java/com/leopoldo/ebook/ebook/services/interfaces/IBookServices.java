@@ -8,5 +8,9 @@ public interface IBookServices {
     JsonApiResponse save(BookCreateDto bookCreateDto);
     JsonApiResponse findAll();
     JsonApiResponse findById(Long id);
+    JsonApiResponse deleteById(Long id);
+    JsonApiResponse usersWhoLiked(Long bookId);
+    JsonApiResponse countLikes(Long bookId);
+    
 
 }

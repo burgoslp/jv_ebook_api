@@ -2,7 +2,9 @@ package com.leopoldo.ebook.ebook.dtos.Author;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import com.leopoldo.ebook.ebook.models.Book;
+
+import com.leopoldo.ebook.ebook.dtos.Book.BookSumaryDto;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -32,5 +34,5 @@ public class AuthorDetailsDto {
     private LocalDateTime updatedAt;
     //campo opcional
     private String image;
-    private List<Book> books;
+    private List<BookSumaryDto> books;
 }

@@ -1,23 +1,17 @@
 package com.leopoldo.ebook.ebook.services;
 
-
 import java.util.List;
-
-import org.apache.el.stream.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.graphql.GraphQlProperties.Http;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import com.leopoldo.ebook.ebook.dtos.Json.JsonApiResponse;
 import com.leopoldo.ebook.ebook.dtos.category.CategoryCreateDto;
-import com.leopoldo.ebook.ebook.dtos.category.CategorySumaryDto;
 import com.leopoldo.ebook.ebook.exeptions.ApiError;
 import com.leopoldo.ebook.ebook.exeptions.ApiException;
+import com.leopoldo.ebook.ebook.mappers.CategoryMapper;
 import com.leopoldo.ebook.ebook.models.Category;
 import com.leopoldo.ebook.ebook.repositories.ICategoryRepository;
 import com.leopoldo.ebook.ebook.services.interfaces.ICategoryServices;
-import com.leopoldo.ebook.ebook.util.MapToDto;
 
 @Service
 public class CategoryServices implements ICategoryServices{
@@ -26,7 +20,7 @@ public class CategoryServices implements ICategoryServices{
     private ICategoryRepository cr;
 
     @Autowired
-    private MapToDto map;
+    private CategoryMapper map;
 
     @Override
     public JsonApiResponse save(CategoryCreateDto categoryCreateDto) {
@@ -41,7 +35,7 @@ public class CategoryServices implements ICategoryServices{
         return JsonApiResponse.builder()
                 .code(HttpStatus.CREATED.value())
                 .message("Se ha creado la categoria correctamente")
-                .data(map.mapToDto(cr.save(category), CategorySumaryDto.class))
+                .data(map.categoryToCategorySumaryDto(cr.save(category)))
                 .build();
     }   
 
@@ -52,12 +46,12 @@ public class CategoryServices implements ICategoryServices{
         return JsonApiResponse.builder()
         .code(HttpStatus.OK.value())
         .message(HttpStatus.OK.getReasonPhrase())
-        .data(map.mapToDto((List<Category>)cr.findAll(), CategorySumaryDto.class))
+        .data(map.categoryToCategorySumaryDto((List<Category>)cr.findAll()))
         .build();
     }
 
     @Override
-    public JsonApiResponse delete(Long id) {
+    public JsonApiResponse deleteById(Long id) {
         
         cr.findById(id).ifPresentOrElse(category -> {
             cr.delete(category);

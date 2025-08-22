@@ -7,4 +7,6 @@ public interface IUserServices {
     JsonApiResponse findAll();
     JsonApiResponse findById(Long id);
     JsonApiResponse delete(Long id);
+    JsonApiResponse addLike(Long userId, Long bookId);
+    JsonApiResponse removeLike(Long userId, Long bookId);
 }

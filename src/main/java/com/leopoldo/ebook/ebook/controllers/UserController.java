@@ -46,4 +46,15 @@ public class UserController {
     public ResponseEntity<JsonApiResponse> delete(@PathVariable Long id) {
         return ResponseEntity.ok().body(us.delete(id));
     }
+
+    @PostMapping("/{userId}/likes/{bookId}")
+    public ResponseEntity<JsonApiResponse> addLike(@PathVariable Long userId, @PathVariable Long bookId) {
+        
+        return ResponseEntity.ok().body(us.addLike(userId, bookId));
+    }
+    
+    @DeleteMapping("/{userId}/likes/{bookId}")
+    public ResponseEntity<JsonApiResponse> removeLike(@PathVariable Long userId, @PathVariable Long bookId) {
+        return ResponseEntity.ok().body(us.removeLike(userId, bookId));
+    }
 }

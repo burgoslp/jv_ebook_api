@@ -37,8 +37,8 @@ public class CategoryController {
    }
     
    @DeleteMapping("/{id}")
-   public ResponseEntity<JsonApiResponse> delete(@PathVariable Long id){
+   public ResponseEntity<JsonApiResponse> deleteById(@PathVariable Long id){
 
-        return ResponseEntity.ok().body(cs.delete(id));
+        return ResponseEntity.ok().body(cs.deleteById(id));
    }
 }

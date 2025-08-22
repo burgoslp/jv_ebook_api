@@ -1,22 +1,19 @@
 package com.leopoldo.ebook.ebook.services;
-
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import com.leopoldo.ebook.ebook.dtos.Book.BookCreateDto;
-import com.leopoldo.ebook.ebook.dtos.Book.BookDetailsDto;
-import com.leopoldo.ebook.ebook.dtos.Book.BookSumaryDto;
 import com.leopoldo.ebook.ebook.dtos.Json.JsonApiResponse;
 import com.leopoldo.ebook.ebook.exeptions.ApiError;
 import com.leopoldo.ebook.ebook.exeptions.ApiException;
+import com.leopoldo.ebook.ebook.mappers.BookMapper;
+import com.leopoldo.ebook.ebook.mappers.UserMapper;
 import com.leopoldo.ebook.ebook.models.Book;
 import com.leopoldo.ebook.ebook.repositories.IBookRepository;
 import com.leopoldo.ebook.ebook.services.interfaces.IBookServices;
-import com.leopoldo.ebook.ebook.util.MapToDto;
 
 @Service
 public class BookServices implements IBookServices {
@@ -25,14 +22,17 @@ public class BookServices implements IBookServices {
     private IBookRepository br;
 
     @Autowired
-    private MapToDto map;
+    private BookMapper map;
+
+    @Autowired
+    private UserMapper userMap;
 
     @Override
     public JsonApiResponse save(BookCreateDto bookCreateDto) {
 
         Book book = Book.builder()
                 .title(bookCreateDto.getTitle())
-                .publicationDate(bookCreateDto.getPublicationDate())
+                .publicationDate(LocalDate.parse(bookCreateDto.getPublicationDate()))
                 .publisher(bookCreateDto.getPublisher())
                 .isbn(bookCreateDto.getIsbn())
                 .synopsis(bookCreateDto.getSynopsis())
@@ -44,7 +44,7 @@ public class BookServices implements IBookServices {
         return JsonApiResponse.builder()
                 .code(HttpStatus.OK.value())
                 .message(HttpStatus.OK.getReasonPhrase())
-                .data(book)
+                .data(map.bookToBookSumaryDto(br.save(book)))
                 .build();
     }
 
@@ -54,7 +54,7 @@ public class BookServices implements IBookServices {
         return JsonApiResponse.builder()
                 .code(HttpStatus.OK.value())
                 .message(HttpStatus.OK.getReasonPhrase())
-                .data(map.mapToDto((List<Book>)br.findAll(), BookSumaryDto.class))
+                .data(map.bookToBookSumaryDto((List<Book>)br.findAll()))
                 .build();
     }
 
@@ -65,8 +65,53 @@ public class BookServices implements IBookServices {
         return JsonApiResponse.builder()
                 .code(HttpStatus.OK.value())
                 .message(HttpStatus.OK.getReasonPhrase())
-                .data(map.mapToDto(book.orElseThrow(() -> new ApiException(ApiError.BOOK_BYID_NOT_FOUND)), BookDetailsDto.class))
+                .data(map.bookToBookDetailsDto(book.orElseThrow(() -> new ApiException(ApiError.BOOK_BYID_NOT_FOUND))))
                 .build();
     }
+
+    @Override
+    public JsonApiResponse deleteById(Long id) {
+
+        br.findById(id).ifPresentOrElse(book -> {
+            br.delete(book);
+        }, () -> {
+            throw new ApiException(ApiError.BOOK_BYID_NOT_FOUND);
+        });
+        
+        return JsonApiResponse.builder()
+                .code(HttpStatus.OK.value())
+                .message(HttpStatus.OK.getReasonPhrase())
+                .data("Libro eliminado correctamente")
+                .build();
+    }
+
+    @Override
+    public JsonApiResponse usersWhoLiked(Long bookId) {
+
+        Book book= br.findById(bookId).orElseThrow( () -> new ApiException(ApiError.BOOK_BYID_NOT_FOUND) );
+
+        
+        
+        return JsonApiResponse.builder()
+                .code(HttpStatus.OK.value())
+                .message(HttpStatus.OK.getReasonPhrase())
+                .data(userMap.userToUserSumaryDto(book.getUsersWhoLiked()))
+                .build();
+    }
+
+    @Override
+    public JsonApiResponse countLikes(Long bookId) {
+        
+        Book book= br.findById(bookId).orElseThrow( () -> new ApiException(ApiError.BOOK_BYID_NOT_FOUND) );
+
+
+       return JsonApiResponse.builder()
+                .code(HttpStatus.OK.value())
+                .message(HttpStatus.OK.getReasonPhrase())
+                .data(book.getUsersWhoLiked().size())
+                .build();
+    }
+
+    
 
 }

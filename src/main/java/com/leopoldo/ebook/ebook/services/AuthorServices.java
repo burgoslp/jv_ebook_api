@@ -8,15 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.leopoldo.ebook.ebook.dtos.Author.AuthorCreateDto;
-import com.leopoldo.ebook.ebook.dtos.Author.AuthorDetailsDto;
-import com.leopoldo.ebook.ebook.dtos.Author.AuthorSumaryDto;
 import com.leopoldo.ebook.ebook.dtos.Json.JsonApiResponse;
 import com.leopoldo.ebook.ebook.exeptions.ApiError;
 import com.leopoldo.ebook.ebook.exeptions.ApiException;
+import com.leopoldo.ebook.ebook.mappers.AuthorMapper;
 import com.leopoldo.ebook.ebook.models.Author;
+import com.leopoldo.ebook.ebook.models.Book;
 import com.leopoldo.ebook.ebook.repositories.IAuthorRepository;
+import com.leopoldo.ebook.ebook.repositories.IBookRepository;
 import com.leopoldo.ebook.ebook.services.interfaces.IAuthorServices;
-import com.leopoldo.ebook.ebook.util.MapToDto;
 
 @Service
 public class AuthorServices implements IAuthorServices {
@@ -25,7 +25,10 @@ public class AuthorServices implements IAuthorServices {
     private IAuthorRepository ar;
 
     @Autowired
-    private MapToDto map;
+    private IBookRepository br;
+
+    @Autowired
+    private AuthorMapper authorMapper;
 
     @Override
     public JsonApiResponse save(AuthorCreateDto authorCreateDto) {
@@ -43,9 +46,9 @@ public class AuthorServices implements IAuthorServices {
 
         
         return JsonApiResponse.builder()
-                .code(200)
-                .message("Author creado correctamente")
-                .data(map.mapToDto(ar.save(author),AuthorSumaryDto.class))
+                .code(HttpStatus.CREATED.value())
+                .message(HttpStatus.CREATED.getReasonPhrase())
+                .data(authorMapper.authorToAuthorSumaryDto(ar.save(author)))
                 .build();
     }
 
@@ -54,7 +57,7 @@ public class AuthorServices implements IAuthorServices {
         return JsonApiResponse.builder()
                 .code(HttpStatus.OK.value())
                 .message(HttpStatus.OK.getReasonPhrase())
-                .data(map.mapToDto((List<Author>)ar.findAll(), AuthorSumaryDto.class))
+                .data(authorMapper.authorsToAuthorSumaryDtos((List<Author>)ar.findAll()))
                 .build();
     }
 
@@ -63,12 +66,72 @@ public class AuthorServices implements IAuthorServices {
 
         Optional<Author> author= ar.findById(id);
 
-        
         return JsonApiResponse.builder()
                 .code(HttpStatus.OK.value())
                 .message(HttpStatus.OK.getReasonPhrase())
-                .data(map.mapToDto(author.orElseThrow(()-> new ApiException(ApiError.AUTHOR_BYID_NOT_FOUND)), AuthorDetailsDto.class))
+                .data(authorMapper.authorToAuthorDetailsDto(author.orElseThrow(()-> new ApiException(ApiError.AUTHOR_BYID_NOT_FOUND))))
                 .build();
     }
+
+    @Override
+    public JsonApiResponse deleteById(Long id) {
+
+        ar.findById(id).ifPresentOrElse(author ->{
+
+            ar.delete(author);
+
+        }, ()->{
+            throw new ApiException(ApiError.AUTHOR_BYID_NOT_FOUND);
+        });
+
+        return JsonApiResponse.builder()
+                .code(HttpStatus.OK.value())
+                .message(HttpStatus.OK.getReasonPhrase())
+                .data("Autor eliminado correctamente")
+                .build();
+    }
+
+    @Override
+    public JsonApiResponse addBook(Long authorId, Long bookId) {
+       
+        Author author = ar.findById(authorId).orElseThrow(() -> new ApiException(ApiError.AUTHOR_BYID_NOT_FOUND));
+        Book book= br.findById(bookId).orElseThrow(()-> new ApiException(ApiError.BOOK_BYID_NOT_FOUND));
+
+        if (author.getBooks().contains(book)) {
+            throw new ApiException(ApiError.BOOK_ALREADY_EXISTS);
+        }
+
+        author.getBooks().add(book);
+        ar.save(author);
+
+        return JsonApiResponse.builder()
+                .code(HttpStatus.OK.value())
+                .message(HttpStatus.OK.getReasonPhrase())
+                .data("Libro agregado al autor correctamente")
+                .build();
+    }
+
+    @Override
+    public JsonApiResponse deleteBook(Long authorId, Long bookId) {
+        
+        Author author = ar.findById(authorId).orElseThrow(() -> new ApiException(ApiError.AUTHOR_BYID_NOT_FOUND));
+        Book book= br.findById(bookId).orElseThrow(()-> new ApiException(ApiError.BOOK_BYID_NOT_FOUND));
+
+        if (!author.getBooks().contains(book)) {
+            throw new ApiException(ApiError.BOOK_NOT_FOUND_IN_AUTHOR);
+        }
+
+
+        author.getBooks().remove(book);
+        ar.save(author);
+
+        return JsonApiResponse.builder()
+                .code(HttpStatus.OK.value())
+                .message(HttpStatus.OK.getReasonPhrase())
+                .data("Libro eliminado del autor correctamente")
+                .build();
+    }
+
+    
 
 }

@@ -6,4 +6,5 @@ import com.leopoldo.ebook.ebook.models.Book;
 @Repository
 public interface IBookRepository extends CrudRepository<Book, Long>{
 
+
 }

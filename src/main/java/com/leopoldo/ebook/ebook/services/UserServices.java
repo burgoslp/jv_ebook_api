@@ -8,22 +8,26 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.leopoldo.ebook.ebook.dtos.Json.JsonApiResponse;
 import com.leopoldo.ebook.ebook.dtos.User.UserCreateDto;
-import com.leopoldo.ebook.ebook.dtos.User.UserDetailsDto;
 import com.leopoldo.ebook.ebook.dtos.User.UserSumaryDto;
 import com.leopoldo.ebook.ebook.exeptions.ApiError;
 import com.leopoldo.ebook.ebook.exeptions.ApiException;
+import com.leopoldo.ebook.ebook.mappers.UserMapper;
+import com.leopoldo.ebook.ebook.models.Book;
 import com.leopoldo.ebook.ebook.models.Role;
 import com.leopoldo.ebook.ebook.models.User;
+import com.leopoldo.ebook.ebook.repositories.IBookRepository;
 import com.leopoldo.ebook.ebook.repositories.IRoleRepository;
 import com.leopoldo.ebook.ebook.repositories.IUserRepository;
 import com.leopoldo.ebook.ebook.services.interfaces.IUserServices;
-import com.leopoldo.ebook.ebook.util.MapToDto;
 
 @Service
 public class UserServices implements IUserServices {
 
     @Autowired
     private IUserRepository ur;
+
+    @Autowired
+    private IBookRepository br;
 
     @Autowired
     private IRoleRepository rr;
@@ -35,7 +39,8 @@ public class UserServices implements IUserServices {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private MapToDto map;
+    private UserMapper map;
+
 
     @Override
     public JsonApiResponse save(UserCreateDto userCreateDto) {
@@ -67,7 +72,7 @@ public class UserServices implements IUserServices {
                 .build();
 
         // registro del usuario y conversion a DTO
-        UserDetailsDto usuarioDetailsDto = (UserDetailsDto) map.mapToDto(ur.save(user), UserDetailsDto.class);
+        UserSumaryDto usuarioDetailsDto =  map.userToUserSumaryDto(ur.save(user));
 
         // Enviar correo de confirmación
         emailService.sendEmail(usuarioDetailsDto.getEmail(), "Registro exitoso EBOOK", "Hola "+ usuarioDetailsDto.getUsername() +", tu registro fue exitoso.");
@@ -86,7 +91,7 @@ public class UserServices implements IUserServices {
                             .builder()
                             .code(HttpStatus.OK.value())
                             .message("Lista de usuarios")
-                            .data(map.mapToDto((List<User>)ur.findAll(), UserSumaryDto.class))
+                            .data(map.userToUserSumaryDto((List<User>)ur.findAll()))
                             .build();
     }
 
@@ -99,7 +104,7 @@ public class UserServices implements IUserServices {
                 .code(HttpStatus.OK.value())
                 .message("Usuario encontrado")
                 .data(
-                    map.mapToDto(user.orElseThrow(() -> new ApiException(ApiError.USER_BYID_NOT_FOUND)), UserSumaryDto.class)
+                   map.userToUserDetailsDto(user.orElseThrow(() -> new ApiException(ApiError.USER_BYID_NOT_FOUND)))
                 )
                 .build();
     }
@@ -125,8 +130,47 @@ public class UserServices implements IUserServices {
 
     }
 
-    
+    public JsonApiResponse addLike(Long userId, Long bookId){
+        
+        User user = ur.findById(userId).orElseThrow(()-> new ApiException(ApiError.USER_BYID_NOT_FOUND));
+        Book book = br.findById(bookId).orElseThrow(()-> new ApiException(ApiError.BOOK_BYID_NOT_FOUND));
+
+        if(user.getLikes().contains(book)){
+            throw new ApiException(ApiError.BOOK_ALREADY_LIKED);
+        }
+
+        user.getLikes().add(book);
+        ur.save(user);
+
+        return JsonApiResponse.builder()
+                .code(HttpStatus.OK.value())
+                .message(HttpStatus.OK.getReasonPhrase())
+                .data("like agregado correctamente")
+                .build();
+    }
 
     
+    @Override
+    public JsonApiResponse removeLike(Long userId, Long bookId) {
+
+        User user = ur.findById(userId).orElseThrow(()-> new ApiException(ApiError.USER_BYID_NOT_FOUND));
+        Book book = br.findById(bookId).orElseThrow(()-> new ApiException(ApiError.BOOK_BYID_NOT_FOUND));
+
+        if(!user.getLikes().contains(book)){
+            throw new ApiException(ApiError.BOOK_NOT_LIKED);
+        }
+
+        user.getLikes().remove(book);
+        ur.save(user);
+       
+        return JsonApiResponse.builder()
+                .code(HttpStatus.OK.value())
+                .message(HttpStatus.OK.getReasonPhrase())
+                .data("like eliminado correctamente")
+                .build();
+    }
+
+    
+
 
 }

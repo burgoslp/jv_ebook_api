@@ -7,6 +7,7 @@ import com.leopoldo.ebook.ebook.services.AuthorServices;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,9 +31,23 @@ public class AuthorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<JsonApiResponse> getMethodName(@PathVariable Long id) {
+    public ResponseEntity<JsonApiResponse> findById(@PathVariable Long id) {
         return ResponseEntity.ok().body(as.findById(id));
     }
     
+    @DeleteMapping("/{id}")
+    public ResponseEntity<JsonApiResponse> deleteById(@PathVariable Long id){
+        return ResponseEntity.ok().body(as.deleteById(id));
+    }
 
+    @PostMapping("/{authorId}/books/{bookId}")
+    public ResponseEntity<JsonApiResponse> addBook(@PathVariable Long authorId, @PathVariable Long bookId) {
+        return ResponseEntity.ok().body(as.addBook(authorId, bookId));
+    }
+
+    @DeleteMapping("/{authorId}/books/{bookId}")
+    public ResponseEntity<JsonApiResponse> deleteBook(@PathVariable Long authorId, @PathVariable Long bookId) {
+        return ResponseEntity.ok().body(as.deleteBook(authorId, bookId));
+    }
+    
 }
