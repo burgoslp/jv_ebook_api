@@ -170,7 +170,55 @@ public class UserServices implements IUserServices {
                 .build();
     }
 
-    
+    @Override
+    public JsonApiResponse addLibrary(Long userId, Long bookId) {
+        User user = ur.findById(userId).orElseThrow(()-> new ApiException(ApiError.USER_BYID_NOT_FOUND));
+        Book book = br.findById(bookId).orElseThrow(()-> new ApiException(ApiError.BOOK_BYID_NOT_FOUND));
 
+        if(user.getLibraries().contains(book)){
+            throw new ApiException(ApiError.BOOK_ALREADY_IN_LIBRARY);
+        }
+
+        user.getLibraries().add(book);
+        ur.save(user);
+
+        return JsonApiResponse.builder()
+                .code(HttpStatus.OK.value())
+                .message(HttpStatus.OK.getReasonPhrase())
+                .data("Libro agregado a la librería correctamente")
+                .build();
+    }
+
+    @Override
+    public JsonApiResponse removeLibrary(Long userId, Long bookId) {
+        User user = ur.findById(userId).orElseThrow(()-> new ApiException(ApiError.USER_BYID_NOT_FOUND));
+        Book book = br.findById(bookId).orElseThrow(()-> new ApiException(ApiError.BOOK_BYID_NOT_FOUND));
+
+        if(!user.getLibraries().contains(book)){
+            throw new ApiException(ApiError.BOOK_NOT_IN_LIBRARY);
+
+        }
+
+        user.getLibraries().remove(book);
+        ur.save(user);
+
+        return JsonApiResponse.builder()
+                .code(HttpStatus.OK.value())
+                .message(HttpStatus.OK.getReasonPhrase())
+                .data("Libro eliminado de la librería correctamente")
+                .build();
+    }
+
+    @Override
+    public JsonApiResponse getUserLibrary(Long userId) {
+    
+        User user = ur.findById(userId).orElseThrow(()-> new ApiException(ApiError.USER_BYID_NOT_FOUND));
+
+        return JsonApiResponse.builder()
+                .code(HttpStatus.OK.value())
+                .message(HttpStatus.OK.getReasonPhrase())
+                .data(map.userToUserLibraryDto(user))
+                .build();
+    }
 
 }

@@ -53,4 +53,14 @@ public class BookController {
         return ResponseEntity.ok().body(bs.countLikes(bookId));
     }
     
+
+    @PostMapping("/{bookId}/categories/{idCategory}")
+    public ResponseEntity<JsonApiResponse> addCategory(@PathVariable Long bookId,@PathVariable Long idCategory) {
+        return ResponseEntity.ok().body(bs.addCategory(bookId,idCategory));
+    }
+
+    @DeleteMapping("/{bookId}/categories/{idCategory}")
+    public ResponseEntity<JsonApiResponse> removeCategory(@PathVariable Long bookId,@PathVariable Long idCategory) {
+        return ResponseEntity.ok().body(bs.removeCategory(bookId,idCategory));
+    }
 }

@@ -52,7 +52,7 @@ public class Book {
     @ManyToMany(mappedBy = "books")
     private List<Category> categories;
 
-    @ManyToMany(mappedBy = "books")
+    @ManyToMany(mappedBy = "libraries")
     private List<User> usersWithBookInLibrary;
 
     @ManyToMany(mappedBy = "likes")

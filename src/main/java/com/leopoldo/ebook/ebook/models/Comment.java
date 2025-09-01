@@ -26,7 +26,6 @@ public class Comment {
 
     @Column(length = 1000)
     private String description;
-    
     //relaciones
     @ManyToOne
     @JoinColumn(name = "user_id")

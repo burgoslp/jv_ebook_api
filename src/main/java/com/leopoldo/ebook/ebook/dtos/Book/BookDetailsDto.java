@@ -3,9 +3,9 @@ package com.leopoldo.ebook.ebook.dtos.Book;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.leopoldo.ebook.ebook.models.Author;
-import com.leopoldo.ebook.ebook.models.Category;
-import com.leopoldo.ebook.ebook.models.Comment;
+import com.leopoldo.ebook.ebook.dtos.Author.AuthorSumaryDto;
+import com.leopoldo.ebook.ebook.dtos.Comment.CommentUserDetailsDto;
+import com.leopoldo.ebook.ebook.dtos.category.CategorySumaryDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,8 +25,8 @@ public class BookDetailsDto {
     private String isbn;
     private String synopsis;
     private String cover;
-    private List<Comment> comments;
-    private List<Author> authors;
-    private List<Category> categories;
+    private List<CommentUserDetailsDto> comments;
+    private List<AuthorSumaryDto> authors;
+    private List<CategorySumaryDto> categories;
 
 }

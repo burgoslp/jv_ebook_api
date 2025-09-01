@@ -9,4 +9,7 @@ public interface IUserServices {
     JsonApiResponse delete(Long id);
     JsonApiResponse addLike(Long userId, Long bookId);
     JsonApiResponse removeLike(Long userId, Long bookId);
+    JsonApiResponse addLibrary(Long userId, Long bookId);
+    JsonApiResponse removeLibrary(Long userId, Long bookId);
+    JsonApiResponse getUserLibrary(Long userId);
 }

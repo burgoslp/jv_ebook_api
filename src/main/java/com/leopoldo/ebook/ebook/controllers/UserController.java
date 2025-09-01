@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -57,4 +59,21 @@ public class UserController {
     public ResponseEntity<JsonApiResponse> removeLike(@PathVariable Long userId, @PathVariable Long bookId) {
         return ResponseEntity.ok().body(us.removeLike(userId, bookId));
     }
+
+    @PostMapping("/{userId}/library/{bookId}")
+    public ResponseEntity<JsonApiResponse> addLibrary(@PathVariable Long userId, @PathVariable Long bookId) {
+        
+        return ResponseEntity.ok().body(us.addLibrary(userId, bookId));
+    }
+
+    @DeleteMapping("/{userId}/library/{bookId}")
+    public ResponseEntity<JsonApiResponse> removeLibrary(@PathVariable Long userId, @PathVariable Long bookId) {
+        return ResponseEntity.ok().body(us.removeLibrary(userId, bookId));
+    }
+
+    @GetMapping("/{userId}/library")
+    public ResponseEntity<JsonApiResponse> getMethodName(@PathVariable Long userId) {
+        return ResponseEntity.ok().body(us.getUserLibrary(userId));
+    }
+    
 }
