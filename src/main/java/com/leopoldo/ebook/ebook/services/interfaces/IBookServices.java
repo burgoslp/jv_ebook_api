@@ -13,5 +13,6 @@ public interface IBookServices {
     JsonApiResponse countLikes(Long bookId);
     JsonApiResponse addCategory(Long bookId,Long idCategory);
     JsonApiResponse removeCategory(Long bookId,Long idCategory);
-
+    JsonApiResponse countBooks();
+    JsonApiResponse countByCategory();
 }

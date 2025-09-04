@@ -2,7 +2,8 @@ package com.leopoldo.ebook.ebook.controllers;
 import org.springframework.web.bind.annotation.RestController;
 import com.leopoldo.ebook.ebook.dtos.Json.JsonApiResponse;
 import com.leopoldo.ebook.ebook.dtos.User.UserCreateDto;
-import com.leopoldo.ebook.ebook.services.UserServices;
+import com.leopoldo.ebook.ebook.services.interfaces.IUserServices;
+
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,18 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-
-
-
-
 
 @RestController
 @RequestMapping("api/v1/users")
 public class UserController {
 
     @Autowired
-    UserServices us;
+    private IUserServices us;
 
     @PostMapping()
     public ResponseEntity<JsonApiResponse> save(@Valid @RequestBody UserCreateDto user) {

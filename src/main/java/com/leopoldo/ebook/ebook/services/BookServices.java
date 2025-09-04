@@ -1,11 +1,14 @@
 package com.leopoldo.ebook.ebook.services;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import com.leopoldo.ebook.ebook.dtos.Book.BookByCategoryDto;
 import com.leopoldo.ebook.ebook.dtos.Book.BookCreateDto;
 import com.leopoldo.ebook.ebook.dtos.Json.JsonApiResponse;
 import com.leopoldo.ebook.ebook.exeptions.ApiError;
@@ -159,8 +162,41 @@ public class BookServices implements IBookServices {
                 .build();
     }
 
-    
+    @Override
+    public JsonApiResponse countBooks() {
+      
+        return JsonApiResponse.builder()
+                .code(HttpStatus.OK.value())
+                .message(HttpStatus.OK.getReasonPhrase())
+                .data(br.count())
+                .build();
+    }
 
+    @Override
+    public JsonApiResponse countByCategory() {
+
+        List<BookByCategoryDto> bookByCategoryDtoList= new ArrayList();
+
+        cr.findAll().forEach(category->{
+            List<Book> books= br.findAllByCategories_Id(category.getId());
+
+            BookByCategoryDto bookByCategoryDto= BookByCategoryDto.builder()
+                    .categoryName(category.getName())
+                    .totalBooks((long)books.size())
+                    .build();
+            bookByCategoryDtoList.add(bookByCategoryDto);
+        });
+
+
+        return JsonApiResponse.builder()
+                .code(HttpStatus.OK.value())
+                .message(HttpStatus.OK.getReasonPhrase())
+                .data(bookByCategoryDtoList)
+                .build();
+    }
+
+    
+    
     
 
 }

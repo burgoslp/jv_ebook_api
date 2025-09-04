@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.leopoldo.ebook.ebook.dtos.Book.BookCreateDto;
 import com.leopoldo.ebook.ebook.dtos.Json.JsonApiResponse;
 import com.leopoldo.ebook.ebook.services.BookServices;
+import com.leopoldo.ebook.ebook.services.interfaces.IBookServices;
+
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class BookController {
 
     @Autowired
-    private BookServices bs;
+    private IBookServices bs;
 
 
     @PostMapping()

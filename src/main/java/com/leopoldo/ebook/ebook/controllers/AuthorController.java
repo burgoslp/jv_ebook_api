@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.leopoldo.ebook.ebook.dtos.Author.AuthorCreateDto;
 import com.leopoldo.ebook.ebook.dtos.Json.JsonApiResponse;
 import com.leopoldo.ebook.ebook.services.AuthorServices;
+import com.leopoldo.ebook.ebook.services.interfaces.IAuthorServices;
+
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class AuthorController {
 
     @Autowired
-    private AuthorServices as;
+    private IAuthorServices as;
 
     @PostMapping()
     public ResponseEntity<JsonApiResponse> save(@Valid @RequestBody AuthorCreateDto authorCreateDto) {

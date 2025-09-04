@@ -67,4 +67,14 @@ public class CategoryServices implements ICategoryServices{
                 .build();
     }
 
+    @Override
+    public JsonApiResponse countCategories() {
+       
+        return JsonApiResponse.builder()
+                .code(HttpStatus.OK.value())
+                .message(HttpStatus.OK.getReasonPhrase())
+                .data(cr.count())
+                .build();
+    }
+
 }

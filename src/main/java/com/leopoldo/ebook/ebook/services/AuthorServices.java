@@ -132,6 +132,16 @@ public class AuthorServices implements IAuthorServices {
                 .build();
     }
 
+    @Override
+    public JsonApiResponse countAuthors() {
+       
+        return JsonApiResponse.builder()
+                .code(HttpStatus.OK.value())
+                .message(HttpStatus.OK.getReasonPhrase())
+                .data(ar.count())
+                .build();
+    }
+
     
 
 }

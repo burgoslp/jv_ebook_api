@@ -10,4 +10,5 @@ public interface IAuthorServices {
     JsonApiResponse deleteById(Long id);
     JsonApiResponse addBook(Long authorId, Long bookId);
     JsonApiResponse deleteBook(Long authorId, Long bookId);
+    JsonApiResponse countAuthors();
 }

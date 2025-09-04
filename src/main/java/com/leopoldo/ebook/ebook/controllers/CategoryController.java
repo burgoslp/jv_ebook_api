@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.leopoldo.ebook.ebook.dtos.Json.JsonApiResponse;
 import com.leopoldo.ebook.ebook.dtos.category.CategoryCreateDto;
 import com.leopoldo.ebook.ebook.services.CategoryServices;
+import com.leopoldo.ebook.ebook.services.interfaces.ICategoryServices;
+
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CategoryController {
 
     @Autowired
-    private CategoryServices cs;
+    private ICategoryServices cs;
 
 
    @PostMapping()
