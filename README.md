@@ -89,3 +89,7 @@ La API permite exportar reportes en formato Excel con información sobre:
 - Historial de préstamos
 - Reportes de usuarios activos
 - Reporte general
+
+## Diagrama de la base de datos:
+
+<img width="1225" height="1112" alt="libros(2)" src="https://github.com/user-attachments/assets/f2ed736a-741c-42a7-8c8c-b9baf25cb735" />
