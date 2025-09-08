@@ -2,12 +2,12 @@
 
 ## 📖 Descripción general
 
-Esta **API de Biblioteca Digital** es un sistema completo desarrollado con **Java 17 y Spring Boot** diseñado para modernizar la gestión de bibliotecas. Ofrece un ecosistema robusto que incluye catálogo digital de libros, gestión de usuarios, sistema de préstamos, reservas, comentarios y un sistema de recomendaciones mediante likes.
+Esta **API de Biblioteca Digital** es un sistema completo desarrollado con **Java 17 y Spring Boot** diseñado para modernizar la gestión de bibliotecas. Ofrece un ecosistema robusto que incluye catálogo digital de libros, gestión de usuarios, sistema de préstamos, comentarios y un sistema de recomendaciones mediante likes.
 
 ### 🎯 Funcionalidades Principales:
 - **Gestión completa de libros** con metadatos detallados (ISBN, editorial, autores, categorías)
 - **Sistema de usuarios avanzado** con perfiles, roles y permisos
-- **Préstamos y reservas** con control de disponibilidad y límites
+- **Préstamos** con control de disponibilidad y límites
 - **Sistema social** de comentarios y likes para interacción entre usuarios
 - **Biblioteca personal** donde usuarios pueden guardar sus libros favoritos
 - **Notificaciones automáticas** por email para registros, préstamos y recordatorios
