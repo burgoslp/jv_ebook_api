@@ -3,9 +3,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.leopoldo.ebook.ebook.dtos.Author.AuthorCreateDto;
 import com.leopoldo.ebook.ebook.dtos.Json.JsonApiResponse;
-import com.leopoldo.ebook.ebook.services.AuthorServices;
 import com.leopoldo.ebook.ebook.services.interfaces.IAuthorServices;
-
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("api/v1/authors")
@@ -50,6 +49,11 @@ public class AuthorController {
     @DeleteMapping("/{authorId}/books/{bookId}")
     public ResponseEntity<JsonApiResponse> deleteBook(@PathVariable Long authorId, @PathVariable Long bookId) {
         return ResponseEntity.ok().body(as.deleteBook(authorId, bookId));
+    }
+    
+    @GetMapping("/count")
+    public ResponseEntity<JsonApiResponse> count() {
+        return ResponseEntity.ok().body(as.countAuthors());
     }
     
 }

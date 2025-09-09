@@ -1,4 +1,5 @@
 package com.leopoldo.ebook.ebook.models;
+import java.time.LocalDateTime;
 import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -13,6 +14,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,15 +32,6 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
-    @NotBlank
-    private String username;
-    @NotBlank
-    private String password;
-    @NotBlank
-    private String email;
-    @Transient
-    public boolean isAdmin;
 
     //relaciones
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -60,4 +53,24 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
+
+    @Column(unique = true)
+    @NotBlank
+    private String username;
+
+    @NotBlank
+    private String password;
+
+    @NotBlank
+    private String email;
+
+    @Transient
+    public boolean isAdmin;
+
+    @NotNull
+    @Column(columnDefinition = "DATETIME")
+    private LocalDateTime createdAt;   
+    
+    @Column(columnDefinition = "DATETIME")
+    private LocalDateTime updateAt;  
 }

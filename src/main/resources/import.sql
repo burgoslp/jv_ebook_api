@@ -1,2 +1,15 @@
 INSERT INTO `roles` (`id`, `description`, `name`) VALUES (NULL, 'rol para los usuarios administradores', 'ROLE_ADMIN');
 INSERT INTO `roles` (`id`, `description`, `name`) VALUES  (NULL, 'rol para los usuarios del ebook', 'ROLE_USER');
+
+INSERT INTO `books` (`available`, `publication_date`, `id`, `synopsis`, `cover`, `isbn`, `publisher`, `title`) VALUES ('4', '1605-01-16', NULL, 'Las aventuras de un hidalgo que, influenciado por los libros de caballerías, decide convertirse en caballero andante y salir en busca de aventuras.', 'don_quijote.jpg', '978-1-56619-909-4', 'Francisco de Robles', 'Don Quijote de la Mancha'); 
+INSERT INTO `books` (`available`, `publication_date`, `id`, `synopsis`, `cover`, `isbn`, `publisher`, `title`) VALUES ('5', '1943-04-06', NULL, 'La historia de un piloto que, tras un accidente en el desierto del Sahara, encuentra a un pequeño príncipe venido de otro planeta.', 'el_principito.jpg', '978-1-56619-909-5', 'Reynal & Hitchcock', 'El Principito');
+INSERT INTO `books` (`available`, `publication_date`, `id`, `synopsis`, `cover`, `isbn`, `publisher`, `title`) VALUES ('3', '1967-05-30', NULL, 'Una novela que narra la historia de la familia Buendía a lo largo de varias generaciones en el pueblo ficticio de Macondo.', 'cien_anos_de_soledad.jpg', '978-1-56619-909-6', 'Editorial Sudamericana', 'Cien Años de Soledad');
+
+INSERT INTO `authors` (`birth_date`, `created_at`, `id`, `updated_at`, `biography`, `image`, `lastname`, `name`, `nationality`) VALUES ('1900-06-29', '2025-09-09 19:39:08.000000', NULL, NULL, 'Fue un escritor y aviador francés, conocido principalmente por su obra El Principito.', 'Francés', 'de Saint-Exupéry', 'Antoine', 'Francés');
+INSERT INTO `authors` (`birth_date`, `created_at`, `id`, `updated_at`, `biography`, `image`, `lastname`, `name`, `nationality`) VALUES ('1927-03-06', '2025-09-09 19:39:08.000000', NULL, NULL, 'Fue un escritor, guionista y periodista colombiano, conocido por su obra Cien Años de Soledad.', 'Colombiano', 'García Márquez', 'Gabriel', 'Colombiano');
+INSERT INTO `authors` (`birth_date`, `created_at`, `id`, `updated_at`, `biography`, `image`, `lastname`, `name`, `nationality`) VALUES ('1547-10-09', '2025-09-09 19:39:08.000000', NULL, NULL, 'Fue un escritor español, conocido principalmente por su obra Don Quijote de la Mancha.', 'Español', 'de Cervantes', 'Miguel', 'Español');
+
+INSERT INTO  `categories`( `id`, `name`, `description`) VALUES (NULL, 'Ficción', 'Libros de ficción que incluyen novelas, cuentos y relatos imaginativos.');
+INSERT INTO  `categories`( `id`, `name`, `description`) VALUES (NULL, 'Clásicos', 'Obras literarias que han perdurado a lo largo del tiempo y son consideradas de gran valor cultural.');
+INSERT INTO  `categories`( `id`, `name`, `description`) VALUES (NULL, 'Aventura', 'Libros que narran historias emocionantes y llenas de acción.');
+INSERT INTO  `categories`( `id`, `name`, `description`) VALUES (NULL, 'Fantasía', 'Libros que presentan mundos imaginarios y elementos sobrenaturales.');

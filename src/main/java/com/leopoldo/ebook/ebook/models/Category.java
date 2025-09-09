@@ -24,13 +24,16 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    //relaciones
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+
+    private List<Book> books;
     @NotBlank
     @Column(unique = true)
     private String name;
+    
     @NotBlank
     @Column(length = 255)
     private String description;
-    //relaciones
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Book> books;
+ 
 }

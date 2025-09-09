@@ -1,6 +1,7 @@
-package com.leopoldo.ebook.ebook.dtos.Comment;
+package com.leopoldo.ebook.ebook.dtos.Loan;
 
-import jakarta.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
+
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,11 +12,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class CommentCreateDto {
-    @NotBlank
-    private String description;
+public class LoanCreateDto {
+
     @NotNull
     private Long userId;
     @NotNull
     private Long bookId;
+
+    private LocalDateTime localDate;
+    
+    private LocalDateTime returnDate;
+
+    private String status; // pending, aproved, rejected
 }

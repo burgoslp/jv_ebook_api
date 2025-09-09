@@ -3,9 +3,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.leopoldo.ebook.ebook.dtos.Book.BookCreateDto;
 import com.leopoldo.ebook.ebook.dtos.Json.JsonApiResponse;
-import com.leopoldo.ebook.ebook.services.BookServices;
 import com.leopoldo.ebook.ebook.services.interfaces.IBookServices;
-
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -65,4 +63,15 @@ public class BookController {
     public ResponseEntity<JsonApiResponse> removeCategory(@PathVariable Long bookId,@PathVariable Long idCategory) {
         return ResponseEntity.ok().body(bs.removeCategory(bookId,idCategory));
     }
+    
+    @GetMapping("/count")
+    public ResponseEntity<JsonApiResponse> count() {
+        return ResponseEntity.ok().body(bs.countBooks());
+    }
+
+    @GetMapping("/countByCategory")
+    public ResponseEntity<JsonApiResponse> countByCategory() {
+        return ResponseEntity.ok().body(bs.countByCategory());
+    }
+
 }

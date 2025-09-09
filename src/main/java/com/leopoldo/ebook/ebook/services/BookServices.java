@@ -3,11 +3,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import com.leopoldo.ebook.ebook.dtos.Book.BookByCategoryDto;
 import com.leopoldo.ebook.ebook.dtos.Book.BookCreateDto;
 import com.leopoldo.ebook.ebook.dtos.Json.JsonApiResponse;
@@ -46,6 +44,7 @@ public class BookServices implements IBookServices {
                 .isbn(bookCreateDto.getIsbn())
                 .synopsis(bookCreateDto.getSynopsis())
                 .cover(bookCreateDto.getCover())
+                .available(bookCreateDto.getAvailable())
                 .build();
 
 
@@ -175,7 +174,7 @@ public class BookServices implements IBookServices {
     @Override
     public JsonApiResponse countByCategory() {
 
-        List<BookByCategoryDto> bookByCategoryDtoList= new ArrayList();
+        List<BookByCategoryDto> bookByCategoryDtoList= new ArrayList<BookByCategoryDto>();
 
         cr.findAll().forEach(category->{
             List<Book> books= br.findAllByCategories_Id(category.getId());

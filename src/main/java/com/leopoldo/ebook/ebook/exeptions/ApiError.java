@@ -13,6 +13,7 @@ public enum ApiError {
     BOOK_NOT_FOUND_IN_AUTHOR(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, "El author no tiene asociado el libro",List.of("")),
     BOOK_ALREADY_IN_LIBRARY(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, "El libro ya esta agregado a la librería del usuario",List.of("")),
     BOOK_NOT_IN_LIBRARY(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, "El libro no se encuentra agregado a la librería del usuario",List.of("")),
+    BOOK_NOT_AVAILABLE(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, "El libro no tiene existencias disponibles",List.of("")),
     AUTHOR_BYID_NOT_FOUND(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, "No se encontró el autor por id",List.of("")),
     CATEGORY_BYID_NOT_FOUND(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, "No se encontró la categoría por id",List.of("")),
     CATEGORY_ALREADY_EXISTS(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, "La categoría ya está asociada al libro",List.of("")),

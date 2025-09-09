@@ -20,4 +20,5 @@ public class BookSumaryDto {
     private String isbn;
     private String synopsis;
     private String cover;
+    private Integer available;
 }

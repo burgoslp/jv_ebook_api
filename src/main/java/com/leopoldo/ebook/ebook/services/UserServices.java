@@ -1,4 +1,5 @@
 package com.leopoldo.ebook.ebook.services;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -68,6 +69,7 @@ public class UserServices implements IUserServices {
                 .password(passwordEncoder.encode(userCreateDto.getPassword()))
                 .email(userCreateDto.getEmail())
                 .isAdmin(userCreateDto.isAdmin)
+                .createdAt(LocalDateTime.now())
                 .roles(rolesList)
                 .build();
 
@@ -214,6 +216,7 @@ public class UserServices implements IUserServices {
     
         User user = ur.findById(userId).orElseThrow(()-> new ApiException(ApiError.USER_BYID_NOT_FOUND));
 
+       
         return JsonApiResponse.builder()
                 .code(HttpStatus.OK.value())
                 .message(HttpStatus.OK.getReasonPhrase())

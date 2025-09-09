@@ -5,17 +5,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import com.leopoldo.ebook.ebook.dtos.Json.JsonApiResponse;
 import com.leopoldo.ebook.ebook.dtos.category.CategoryCreateDto;
-import com.leopoldo.ebook.ebook.services.CategoryServices;
 import com.leopoldo.ebook.ebook.services.interfaces.ICategoryServices;
-
 import jakarta.validation.Valid;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 
 
 @RestController
@@ -43,4 +41,10 @@ public class CategoryController {
 
         return ResponseEntity.ok().body(cs.deleteById(id));
    }
+
+   @GetMapping("/count")
+   public ResponseEntity<JsonApiResponse> count() {
+       return ResponseEntity.ok().body(cs.countCategories());
+   }
+   
 }

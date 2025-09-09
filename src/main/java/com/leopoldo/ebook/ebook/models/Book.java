@@ -26,21 +26,6 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @NotBlank
-    private String title;
-    @Column(name = "publication_date", columnDefinition = "DATE")
-    @NotNull
-    private LocalDate publicationDate;
-    @NotBlank
-    private String publisher;
-    @NotBlank
-    @Column(unique = true)
-    private String isbn;
-    @NotBlank
-    @Column(length = 1000)
-    private String synopsis;
-    @NotBlank
-    private String cover;
 
     //relaciones
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -58,4 +43,28 @@ public class Book {
     @ManyToMany(mappedBy = "likes")
     private List<User> usersWhoLiked;
 
+    //atributos
+    @NotBlank
+    private String title;
+
+    @Column(name = "publication_date", columnDefinition = "DATE")
+    @NotNull
+    private LocalDate publicationDate;
+
+    @NotBlank
+    private String publisher;
+
+    @NotBlank
+    @Column(unique = true)
+    private String isbn;
+
+    @NotBlank
+    @Column(length = 1000)
+    private String synopsis;
+    
+    @NotBlank
+    private String cover;
+
+    @NotNull
+    private Integer available;
 }   

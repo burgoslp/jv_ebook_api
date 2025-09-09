@@ -25,6 +25,7 @@ public class BookDetailsDto {
     private String isbn;
     private String synopsis;
     private String cover;
+    private Integer available;
     private List<CommentUserDetailsDto> comments;
     private List<AuthorSumaryDto> authors;
     private List<CategorySumaryDto> categories;

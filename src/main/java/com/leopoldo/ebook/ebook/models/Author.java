@@ -27,26 +27,33 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
-    private String name;
-    @NotBlank
-    private String lastname;
-    @NotNull
-    @Column(name = "birth_date", columnDefinition = "DATE")
-    private LocalDate birthDate;
-    @NotBlank
-    private String nationality;
-    @Column(length = 1000)
-    @NotBlank
-    private String biography;
-    // campo opcional
-    private String image;
-    @NotNull
-    @Column(columnDefinition = "DATETIME")
-    private LocalDateTime createdAt;
-    @Column(columnDefinition = "DATETIME")
-    private LocalDateTime updatedAt;    
+    
     @ManyToMany(cascade =  {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Book> books;
 
+    @NotBlank
+    private String name;
+
+    @NotBlank
+    private String lastname;
+
+    @NotNull
+    @Column(name = "birth_date", columnDefinition = "DATE")
+    private LocalDate birthDate;
+
+    @NotBlank
+    private String nationality;
+
+    @Column(length = 1000)
+    @NotBlank
+    private String biography;
+
+    private String image;
+    
+    @NotNull
+    @Column(columnDefinition = "DATETIME")
+    private LocalDateTime createdAt;
+
+    @Column(columnDefinition = "DATETIME")
+    private LocalDateTime updatedAt; 
 }

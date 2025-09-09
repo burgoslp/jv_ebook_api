@@ -26,5 +26,7 @@ public class BookCreateDto {
     private String synopsis;
     @NotBlank
     private String cover;
+    @NotNull
+    private Integer available;
 
 }
