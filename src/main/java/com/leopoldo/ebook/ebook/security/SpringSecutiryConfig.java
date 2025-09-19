@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.leopoldo.ebook.ebook.security.filters.jwtAuthenticationFilter;
+import com.leopoldo.ebook.ebook.security.filters.jwtAuthorizationFilter;
 
 @Configuration
 public class SpringSecutiryConfig {
@@ -36,12 +37,16 @@ public class SpringSecutiryConfig {
 
         jwtAuthenticationFilter filter = new jwtAuthenticationFilter(authenticationManager());
         filter.setFilterProcessesUrl("/api/v1/login");
+
+        jwtAuthorizationFilter authorizationFilter = new jwtAuthorizationFilter(authenticationManager());
         
         return http.authorizeHttpRequests((auth) -> auth
                 .requestMatchers(HttpMethod.GET,"/api/v1/users").permitAll() 
+                .requestMatchers(HttpMethod.POST,"/api/v1/users").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 )
                 .addFilter(filter)
+                .addFilter(authorizationFilter)
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
