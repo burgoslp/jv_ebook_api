@@ -91,5 +91,86 @@ La API permite exportar reportes en formato Excel con información sobre:
 - Reporte general
 
 ## Diagrama de la base de datos:
+<img width="1257" height="1157" alt="libros" src="https://github.com/user-attachments/assets/5170797d-8d30-49df-8435-c661ffca71eb" />
 
-<img width="1225" height="1112" alt="libros(2)" src="https://github.com/user-attachments/assets/f2ed736a-741c-42a7-8c8c-b9baf25cb735" />
+## 📜 Listado de endpoints 
+la api cuenta con multiples rutas que nos permite la creación, eliminación, actualización y lectura del aplicativo.
+
+<a name="indice"></a>
+## 📑 Índice de Endpoints
+
+- 👤 [1. Crear Usuario](#1-crear-usuario)
+- 📋 [2. Listar Todos los Usuarios](#2-listar-todos-los-usuarios)
+
+---
+
+<a name="1-crear-usuario"></a>
+## 👤 1. Crear Usuario [🔙](#indice)
+
+**Método:** `POST`  
+**Endpoint:** `/api/v1/users`
+
+#### 📝 Descripción
+Crea un nuevo usuario con los datos suministrados y envía una notificación por correo electrónico.
+
+#### 📥 Request Body
+```json
+{
+    "username": "pburgos",
+    "password": "123456",
+    "email": "xxxxxxxxxxxxxxxxx@gmail.com",
+    "isAdmin": true
+}
+```
+
+#### ✅ Respuesta exitosa
+```json
+{
+    "code": 201,
+    "message": "Created",
+    "data": {
+        "id": 4,
+        "username": "pburgos",
+        "email": "xxxxxxxxxxxxx@gmail.com"
+    }
+}
+```
+#### ❌ Respuesta de validación
+```json
+{
+    "code": 400,
+    "message": "Algunos de los argumentos ingresados no son correctos",
+    "data": [
+        "password: no debe estar vacío",
+        "username: no debe estar vacío",
+        "email: no debe estar vacío"
+    ]
+}
+```
+#### 📧 Notificación
+Nota: Se enviará un correo electrónico de notificación al usuario registrado.
+
+<a name="2-listar-todos-los-usuarios"></a>
+## 📋 2. Listar Todos los Usuarios 🔙
+
+**Método: GET**
+**Endpoint: /api/v1/users**
+
+#### 📝 Descripción
+Este endpoint proporciona un listado completo de todos los usuarios registrados. No requiere autenticación.
+
+#### ✅ Respuesta exitosa
+```json
+{
+    "code": 200,
+    "message": "Lista de usuarios",
+    "data": [
+        {
+            "id": 1,
+            "username": "lpinedo",
+            "email": "xxxxxxxxxxxxxxxx@gmail.com"
+        }
+    ]
+}
+```
+
