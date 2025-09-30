@@ -41,8 +41,39 @@ public class SpringSecutiryConfig {
         jwtAuthorizationFilter authorizationFilter = new jwtAuthorizationFilter(authenticationManager());
         
         return http.authorizeHttpRequests((auth) -> auth
-                .requestMatchers(HttpMethod.GET,"/api/v1/users").permitAll() 
-                .requestMatchers(HttpMethod.POST,"/api/v1/users").hasRole("ADMIN")
+                //rutas libres
+                .requestMatchers(HttpMethod.POST,"/api/v1/users").permitAll()
+                .requestMatchers(HttpMethod.GET,"/api/v1/users").permitAll()
+                .requestMatchers(HttpMethod.GET,"/api/v1/categories").permitAll()
+                .requestMatchers(HttpMethod.GET,"/api/v1/categories/count").permitAll()
+                .requestMatchers(HttpMethod.GET,"/api/v1/authors").permitAll()
+                .requestMatchers(HttpMethod.GET,"/api/v1/authors/{id}").permitAll()
+                .requestMatchers(HttpMethod.GET,"/api/v1/authors/count").permitAll()
+                .requestMatchers(HttpMethod.GET,"/api/v1/books").permitAll()
+                .requestMatchers(HttpMethod.GET,"/api/v1/books/{bookId}/usersWhoLiked").permitAll()
+                .requestMatchers(HttpMethod.GET,"/api/v1/books/{bookId}/likes").permitAll()
+                .requestMatchers(HttpMethod.GET,"/api/v1/books/{id}").permitAll()
+                .requestMatchers(HttpMethod.GET,"/api/v1/books/count").permitAll()
+                .requestMatchers(HttpMethod.GET,"/api/v1/books/countByCategory").permitAll()
+
+                //rutas solo para administradores
+                .requestMatchers(HttpMethod.DELETE, "/api/v1/users/{id}").hasRole("ADMIN") 
+                .requestMatchers(HttpMethod.POST, "/api/v1/categories").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE,"/api/v1/categories/{id}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST,"/api/v1/authors").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE,"/api/v1/authors/{id}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST,"/api/v1/authors/{authorId}/books/{bookId}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE,"/api/v1/authors/{authorId}/books/{bookId}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST,"/api/v1/books").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST,"/api/v1/books/{bookId}/categories/{idCategory}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE,"/api/v1/books/{bookId}/categories/{idCategory}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET,"/api/v1/excel").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET,"/api/v1/loans").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST,"/api/v1/loans/aprove/{id}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST,"/api/v1/loans/returned/{id}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST,"api/v1/loans/rejected/{id}").hasRole("ADMIN")
+
+                
                 .anyRequest().authenticated()
                 )
                 .addFilter(filter)

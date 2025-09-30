@@ -32,7 +32,7 @@ public class UserController {
     public ResponseEntity<JsonApiResponse> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(us.findAll());
     }
-   
+    
     @GetMapping("/{id}")
     public ResponseEntity<JsonApiResponse> findById(@PathVariable Long id) {
         return ResponseEntity.ok().body(us.findById(id));
