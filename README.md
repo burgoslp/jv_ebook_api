@@ -119,7 +119,7 @@ la api cuenta con multiples rutas que nos permite la creación, eliminación, ac
 
 **Método:** `POST`  
 **Endpoint:** `/api/v1/users`
-**VALIDACIÓN:** `SIN AUTENTICACIÓN` 
+**Validación:** `SIN AUTENTICACIÓN` 
 
 #### 📝 Descripción
 Crea un nuevo usuario con los datos suministrados y envía una notificación por correo electrónico.
@@ -166,7 +166,7 @@ Nota: Se enviará un correo electrónico de notificación al usuario registrado.
 
 **Método: GET**
 **Endpoint: /api/v1/users**
-**VALIDACIÓN:** `SIN AUTENTICACIÓN` 
+**Validación:** `SIN AUTENTICACIÓN` 
 
 #### 📝 Descripción
 Este endpoint proporciona un listado completo de todos los usuarios registrados. No requiere autenticación.
@@ -189,7 +189,7 @@ Este endpoint proporciona un listado completo de todos los usuarios registrados.
 <a name="3-buscar-usuario-por-id"></a>
 **Método: GET**
 **Endpoint: /api/v1/users/{id}**
-**VALIDACIÓN:** `USER_ROLE` 
+**Validación:** `USER_ROLE` 
 #### 📝 Descripción
 Busca y retorna la información de un usuario específico por su ID.
 
@@ -224,7 +224,7 @@ Busca y retorna la información de un usuario específico por su ID.
 
 **Método:** `DELETE`  
 **Endpoint:** `/api/v1/users/{id}`
-**VALIDACIÓN:** `ADMIN_ROLE` 
+**Validación:** `ADMIN_ROLE` 
 
 #### 📝 Descripción
 Elimina un usuario por su ID y en cascada elimina todos sus comentarios, likes y librerías personales.
@@ -250,7 +250,7 @@ Elimina un usuario por su ID y en cascada elimina todos sus comentarios, likes y
 
 **Método:** `POST`  
 **Endpoint:** `/api/v1/users/{id}/likes/{bookId}`
-**VALIDACIÓN:** `USER_ROLE` 
+**Validación:** `USER_ROLE` 
 
 #### 📝 Descripción
 Agrega un like de un usuario a un libro específico.
