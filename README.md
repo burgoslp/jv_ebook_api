@@ -101,7 +101,17 @@ la api cuenta con multiples rutas que nos permite la creación, eliminación, ac
 
 - 👤 [1. Crear Usuario](#1-crear-usuario)
 - 📋 [2. Listar Todos los Usuarios](#2-listar-todos-los-usuarios)
-
+- 🔍 [3. Buscar Usuario por ID](#3-buscar-usuario-por-id)
+- 🗑️ [4. Eliminar Usuario](#4-eliminar-usuario)
+- ❤️ [5. Agregar Like a Libro](#5-agregar-like-a-libro)
+- 💔 [6. Eliminar Like de Libro](#6-eliminar-like-de-libro)
+- 📚 [7. Agregar Libro a Librería](#7-agregar-libro-a-librería)
+- 🗑️ [8. Eliminar Libro de Librería](#8-eliminar-libro-de-librería)
+- 📖 [9. Obtener Libros Favoritos del Usuario](#9-obtener-libros-favoritos-del-usuario)
+- 📂 [10. Crear Categoría](#10-crear-categoría)
+- 🗑️ [11. Eliminar Categoría](#11-eliminar-categoría)
+- 📊 [12. Contar Categorías](#12-contar-categorías)
+- ✍️ [13. Crear Autor](#13-crear-autor)
 ---
 
 <a name="1-crear-usuario"></a>
@@ -109,6 +119,7 @@ la api cuenta con multiples rutas que nos permite la creación, eliminación, ac
 
 **Método:** `POST`  
 **Endpoint:** `/api/v1/users`
+**VALIDACIÓN:** `SIN AUTENTICACIÓN` 
 
 #### 📝 Descripción
 Crea un nuevo usuario con los datos suministrados y envía una notificación por correo electrónico.
@@ -151,10 +162,11 @@ Crea un nuevo usuario con los datos suministrados y envía una notificación por
 Nota: Se enviará un correo electrónico de notificación al usuario registrado.
 
 <a name="2-listar-todos-los-usuarios"></a>
-## 📋 2. Listar Todos los Usuarios 🔙
+## 📋 2. Listar Todos los Usuarios [🔙](#indice)
 
 **Método: GET**
 **Endpoint: /api/v1/users**
+**VALIDACIÓN:** `SIN AUTENTICACIÓN` 
 
 #### 📝 Descripción
 Este endpoint proporciona un listado completo de todos los usuarios registrados. No requiere autenticación.
@@ -174,3 +186,412 @@ Este endpoint proporciona un listado completo de todos los usuarios registrados.
 }
 ```
 
+<a name="3-buscar-usuario-por-id"></a>
+**Método: GET**
+**Endpoint: /api/v1/users/{id}**
+**VALIDACIÓN:** `USER_ROLE` 
+#### 📝 Descripción
+Busca y retorna la información de un usuario específico por su ID.
+
+#### ✅ Respuesta exitosa
+```json
+{
+    "code": 200,
+    "message": "Usuario encontrado",
+    "data": {
+        "id": 1,
+        "username": "lpinedo",
+        "email": "pinedo.burgoslp3@gmail.com",
+        "roles": [
+            {
+                "name": "ROLE_USER",
+                "description": "rol para los usuarios del ebook"
+            }
+        ]
+    }
+}
+```
+#### ❌ Respuesta de validación del ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el usuario por id",
+    "data": [""]
+}
+```
+<a name="4-eliminar-usuario"></a>
+## 🗑️ 4. Eliminar Usuario [🔙](#indice)
+
+**Método:** `DELETE`  
+**Endpoint:** `/api/v1/users/{id}`
+**VALIDACIÓN:** `ADMIN_ROLE` 
+
+#### 📝 Descripción
+Elimina un usuario por su ID y en cascada elimina todos sus comentarios, likes y librerías personales.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "Usuario eliminado exitosamente",
+    "data": "Usuario y todos sus datos asociados han sido eliminados"
+}
+```
+#### ❌ Respuesta de validación del ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el usuario por id",
+    "data": [""]
+}
+```
+<a name="5-agregar-like-a-libro"></a>
+## ❤️ 5. Agregar Like a Libro [🔙](#indice)
+
+**Método:** `POST`  
+**Endpoint:** `/api/v1/users/{id}/likes/{bookId}`
+**VALIDACIÓN:** `USER_ROLE` 
+
+#### 📝 Descripción
+Agrega un like de un usuario a un libro específico.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": "like agregado correctamente"
+}
+```
+#### ❌ Respuesta de validación del ID del user
+```json
+{
+    "code": 404,
+    "message": "No se encontró el usuario por id",
+    "data": [""]
+}
+```
+
+#### ❌ Validación del Book ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el libro por id",
+    "data": [""]
+}
+```
+
+<a name="6-eliminar-like-de-libro"></a>
+## 💔 6. Eliminar Like de Libro [🔙](#indice)
+
+**Método:** `DELETE`  
+**Endpoint:** `/api/v1/users/{id}/likes/{bookId}`
+**Validación:** `USER_ROLE`
+ 
+#### 📝 Descripción
+Elimina el like de un usuario a un libro específico.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": "like eliminado correctamente"
+}
+```
+
+#### ❌ Validación del User ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el usuario por id",
+    "data": [""]
+}
+```
+
+#### ❌ Validación del Book ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el libro por id",
+    "data": [""]
+}
+```
+
+<a name="7-agregar-libro-a-librería"></a>
+## 📚 7. Agregar Libro a Librería [🔙](#indice)
+
+**Método:** `POST`  
+**Endpoint:** `/api/v1/users/{id}/library/{bookId}`
+**Validación:** `USER_ROLE`
+
+#### 📝 Descripción
+Agrega un libro a la librería de favoritos del usuario seleccionado.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": "Libro agregado a la librería correctamente"
+}
+```
+
+#### ❌ Validación del User ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el usuario por id",
+    "data": [""]
+}
+```
+
+#### ❌ Validación del Book ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el libro por id",
+    "data": [""]
+}
+```
+
+<a name="8-eliminar-libro-de-librería"></a>
+## 🗑️ 8. Eliminar Libro de Librería [🔙](#indice)
+
+**Método:** `DELETE`  
+**Endpoint:** `/api/v1/users/{id}/library/{bookId}`
+**Validación:** `USER_ROLE`
+
+#### 📝 Descripción
+Elimina el libro seleccionado de los favoritos del usuario.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": "Libro eliminado de la librería correctamente"
+}
+```
+#### ❌ Validación del User ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el usuario por id",
+    "data": [""]
+}
+```
+
+#### ❌ Validación del Book ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el libro por id",
+    "data": [""]
+}
+```
+
+<a name="9-obtener-libros-favoritos-del-usuario"></a>
+## 📖 9. Obtener Libros Favoritos del Usuario [🔙](#indice)
+
+**Método:** `GET`  
+**Endpoint:** `/api/v1/users/{id}/library`
+**Validación:** `USER_ROLE`
+
+#### 📝 Descripción
+Obtiene todos los libros favoritos de la librería del usuario.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": {
+        "username": "pburgos",
+        "libraries": [
+            {
+                "id": 1,
+                "title": "Don Quijote de la Mancha",
+                "publicationDate": "1605-01-16",
+                "publisher": "Francisco de Robles",
+                "isbn": "978-1-56619-909-4",
+                "synopsis": "Las aventuras de un hidalgo que, influenciado por los libros de caballerías, decide convertirse en caballero andante y salir en busca de aventuras.",
+                "cover": "don_quijote.jpg",
+                "available": 4
+            },
+            {
+                "id": 2,
+                "title": "El Principito",
+                "publicationDate": "1943-04-06",
+                "publisher": "Reynal & Hitchcock",
+                "isbn": "978-1-56619-909-5",
+                "synopsis": "La historia de un piloto que, tras un accidente en el desierto del Sahara, encuentra a un pequeño príncipe venido de otro planeta.",
+                "cover": "el_principito.jpg",
+                "available": 5
+            }
+        ]
+    }
+}
+```
+
+#### ❌ Validación del User ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el usuario por id",
+    "data": [""]
+}
+```
+
+<a name="10-crear-categoría"></a>
+## 📂 10. Crear Categoría [🔙](#indice)
+
+**Método:** `POST`  
+**Endpoint:** `/api/v1/categories`
+**Validación:** `ADMIN_ROLE`
+#### 📝 Descripción
+Crea una nueva categoría para clasificar libros.
+
+#### 📥 Request Body
+```json
+{
+    "name": "terror",
+    "description": "libros de terror"
+}
+```
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 201,
+    "message": "Se ha creado la categoria correctamente",
+    "data": {
+        "id": 5,
+        "name": "terror",
+        "description": "libros de terror"
+    }
+}
+```
+
+#### ❌ Validación del nombre de la categoria
+```json
+{
+    "code": 400,
+    "message": "Algunos de los argumentos ingresados no son correctos",
+    "data": [
+        "name: El nombre ya esta en uso"
+    ]
+}
+```
+
+<a name="11-eliminar-categoría"></a>
+## 🗑️ 11. Eliminar Categoría [🔙](#indice)
+
+**Método:** `DELETE`  
+**Endpoint:** `/api/v1/categories/{id}`
+**Validación:** `ADMIN_ROLE`
+
+#### 📝 Descripción
+Elimina la categoría especificada por ID.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": "Categoria eliminada correctamente"
+}
+```
+#### ❌ Validación del ID de la categoría
+```json
+{
+    "code": 404,
+    "message": "No se encontró la categoría por id",
+    "data": [""]
+}
+```
+
+<a name="12-contar-categorías"></a>
+## 📊 12. Contar Categorías [🔙](#indice)
+
+**Método:** `GET`  
+**Endpoint:** `/api/v1/categories/count`
+**Validación:** `SIN AUTENTICACIÓN`
+
+#### 📝 Descripción
+Obtiene el conteo total de categorías existentes en el sistema.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": 5
+}
+```
+
+<a name="13-crear-autor"></a>
+## ✍️ 13. Crear Autor [🔙](#indice)
+
+**Método:** `POST`  
+**Endpoint:** `/api/v1/authors`
+**Validación:** `ADMIN_ROLE`
+
+#### 📝 Descripción
+Crea un nuevo autor en el sistema.
+
+#### 📥 Request Body
+```json
+{
+    "name": "alfredo",
+    "lastname": "vargas",
+    "birthDate": "2025-12-05",
+    "biography": "una description de su vida aqui",
+    "nationality": "venezolano",
+    "image": "book.jpg"
+}
+```
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 201,
+    "message": "Created",
+    "data": {
+        "id": 4,
+        "name": "alfredo",
+        "lastname": "vargas",
+        "birthDate": "2025-12-05",
+        "nationality": "venezolano",
+        "biography": "una description de su vida aqui",
+        "createdAt": "2025-10-01T11:24:24.6659092",
+        "updatedAt": null,
+        "image": "book.jpg"
+    }
+}
+```
+
+#### ❌ Validación del Request Body
+```json
+{
+    "code": 400,
+    "message": "Algunos de los argumentos ingresados no son correctos",
+    "data": [
+        "birthDate: no debe estar vacío",
+        "name: no debe estar vacío",
+        "lastname: no debe estar vacío",
+        "nationality: no debe estar vacío",
+        "biography: no debe estar vacío"
+    ]
+}
+```
+
+#### ❌ Validación del Formato de Fecha
+```json
+{
+    "code": 400,
+    "message": "Algunos de los argumentos ingresados no son correctos",
+    "data": [
+        "birthDate: la fecha de nacimiento debe tener el siguiente formato YYYY-MM-DD"
+    ]
+}
+```
