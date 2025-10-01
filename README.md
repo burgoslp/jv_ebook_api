@@ -112,6 +112,10 @@ la api cuenta con multiples rutas que nos permite la creación, eliminación, ac
 - 🗑️ [11. Eliminar Categoría](#11-eliminar-categoría)
 - 📊 [12. Contar Categorías](#12-contar-categorías)
 - ✍️ [13. Crear Autor](#13-crear-autor)
+- 📚 [14. Listar Todos los Autores](#14-listar-todos-los-autores)
+- 🔍 [15. Buscar Autor por ID con Libros](#15-buscar-autor-por-id-con-libros)
+- 🗑️ [16. Eliminar Autor](#16-eliminar-autor)
+- 
 ---
 
 <a name="1-crear-usuario"></a>
@@ -593,5 +597,126 @@ Crea un nuevo autor en el sistema.
     "data": [
         "birthDate: la fecha de nacimiento debe tener el siguiente formato YYYY-MM-DD"
     ]
+}
+```
+
+<a name="14-listar-todos-los-autores"></a>
+## 📚 14. Listar Todos los Autores [🔙](#indice)
+
+**Método:** `GET`  
+**Endpoint:** `/api/v1/authors`
+**Validación:** `SIN AUTENTICACIÓN`
+
+#### 📝 Descripción
+Muestra todos los autores registrados en el sistema.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": [
+        {
+            "id": 1,
+            "name": "Antoine",
+            "lastname": "de Saint-Exupéry",
+            "birthDate": "1900-06-29",
+            "nationality": "Francés",
+            "biography": "Fue un escritor y aviador francés, conocido principalmente por su obra El Principito.",
+            "createdAt": "2025-09-09T19:39:08",
+            "updatedAt": null,
+            "image": "Francés"
+        },
+        {
+            "id": 2,
+            "name": "Gabriel",
+            "lastname": "García Márquez",
+            "birthDate": "1927-03-06",
+            "nationality": "Colombiano",
+            "biography": "Fue un escritor, guionista y periodista colombiano, conocido por su obra Cien Años de Soledad.",
+            "createdAt": "2025-09-09T19:39:08",
+            "updatedAt": null,
+            "image": "Colombiano"
+        }
+    ]
+}
+```
+
+<a name="15-buscar-autor-por-id-con-libros"></a>
+## 🔍 15. Buscar Autor por ID con Libros [🔙](#indice)
+
+**Método:** `GET`  
+**Endpoint:** `/api/v1/authors/{id}`
+**Validación:** `SIN AUTENTICACIÓN`
+
+#### 📝 Descripción
+Muestra un autor específico según su ID y todos los libros relacionados al autor.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": {
+        "id": 1,
+        "name": "Antoine",
+        "lastname": "de Saint-Exupéry",
+        "birthDate": "1900-06-29",
+        "nationality": "Francés",
+        "biography": "Fue un escritor y aviador francés, conocido principalmente por su obra El Principito.",
+        "createdAt": "2025-09-09T19:39:08",
+        "updatedAt": null,
+        "image": "Francés",
+        "books": [
+            {
+                "id": 1,
+                "title": "Don Quijote de la Mancha",
+                "publicationDate": "1605-01-16",
+                "publisher": "Francisco de Robles",
+                "isbn": "978-1-56619-909-4",
+                "synopsis": "Las aventuras de un hidalgo que, influenciado por los libros de caballerías, decide convertirse en caballero andante y salir en busca de aventuras.",
+                "cover": "don_quijote.jpg",
+                "available": 4
+            }
+        ]
+    }
+}
+```
+
+#### ❌ Validación del id del author
+```json
+{
+    "code": 404,
+    "message": "No se encontró el autor por id",
+    "data": [
+        ""
+    ]
+}
+```
+<a name="16-eliminar-autor"></a>
+## 🗑️ 16. Eliminar Autor [🔙](#indice)
+
+**Método:** `DELETE`  
+**Endpoint:** `/api/v1/authors/{id}`
+**Validación:** `ADMIN_ROLE`
+
+#### 📝 Descripción
+Elimina un autor específico por su ID.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": "Autor eliminado correctamente"
+}
+```
+
+#### ❌ Validación del id del author
+```json
+{
+    "code": 404,
+    "message": "No se encontró el autor por id",
+    "data": [""]
 }
 ```
