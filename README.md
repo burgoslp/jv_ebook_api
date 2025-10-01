@@ -115,7 +115,7 @@ la api cuenta con multiples rutas que nos permite la creación, eliminación, ac
 - 📚 [14. Listar Todos los Autores](#14-listar-todos-los-autores)
 - 🔍 [15. Buscar Autor por ID con Libros](#15-buscar-autor-por-id-con-libros)
 - 🗑️ [16. Eliminar Autor](#16-eliminar-autor)
-- 
+- 📖 [17. Asociar Libro a Autor](#17-asociar-libro-a-autor)
 ---
 
 <a name="1-crear-usuario"></a>
@@ -717,6 +717,43 @@ Elimina un autor específico por su ID.
 {
     "code": 404,
     "message": "No se encontró el autor por id",
+    "data": [""]
+}
+```
+
+<a name="17-asociar-libro-a-autor"></a>
+## 📖 17. Asociar Libro a Autor [🔙](#indice)
+
+**Método:** `POST`  
+**Endpoint:** `/api/v1/authors/{id}/books/{bookId}`
+**Validación:** `ADMIN_ROLE`
+
+#### 📝 Descripción
+Asocia un libro existente a un autor mediante el ID del autor y el ID del libro.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": "Libro agregado al autor correctamente"
+}
+
+
+#### ❌ Validación del id del author
+```json
+{
+    "code": 404,
+    "message": "No se encontró el autor por id",
+    "data": [""]
+}
+```
+
+#### ❌ ❌ Validación del Book ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el libro por id",
     "data": [""]
 }
 ```
