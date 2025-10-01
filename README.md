@@ -738,7 +738,7 @@ Asocia un libro existente a un autor mediante el ID del autor y el ID del libro.
     "message": "OK",
     "data": "Libro agregado al autor correctamente"
 }
-
+```
 
 #### ❌ Validación del id del author
 ```json
@@ -749,7 +749,7 @@ Asocia un libro existente a un autor mediante el ID del autor y el ID del libro.
 }
 ```
 
-#### ❌ ❌ Validación del Book ID
+#### ❌ Validación del Book ID
 ```json
 {
     "code": 404,
