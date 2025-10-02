@@ -799,7 +799,7 @@ Elimina la asociación de un libro específico con el autor seleccionado.
 
 **Método:** `GET`  
 **Endpoint:** `/api/v1/authors/count`
-**Validación:** `ADMIN_ROLE`
+**Validación:** `SIN AUTENTICACIÓN`
 
 #### 📝 Descripción
 Obtiene el conteo total de autores registrados en el sistema.
