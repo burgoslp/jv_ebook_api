@@ -116,6 +116,8 @@ la api cuenta con multiples rutas que nos permite la creación, eliminación, ac
 - 🔍 [15. Buscar Autor por ID con Libros](#15-buscar-autor-por-id-con-libros)
 - 🗑️ [16. Eliminar Autor](#16-eliminar-autor)
 - 📖 [17. Asociar Libro a Autor](#17-asociar-libro-a-autor)
+- 🗑️ [18. Eliminar Libro de Autor](#18-eliminar-libro-de-autor)
+- 📊 [19. Contar Autores](#19-contar-autores)
 ---
 
 <a name="1-crear-usuario"></a>
@@ -757,3 +759,56 @@ Asocia un libro existente a un autor mediante el ID del autor y el ID del libro.
     "data": [""]
 }
 ```
+<a name="18-eliminar-libro-de-autor"></a>
+## 🗑️ 18. Eliminar Libro de Autor [🔙](#indice)
+
+**Método:** `DELETE`  
+**Endpoint:** `/api/v1/authors/{id}/books/{bookId}`
+**Validación:** `ADMIN_ROLE`
+
+#### 📝 Descripción
+Elimina la asociación de un libro específico con el autor seleccionado.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": "Libro eliminado del autor correctamente"
+}
+
+#### ❌ Validación del id del author
+```json
+{
+    "code": 404,
+    "message": "No se encontró el autor por id",
+    "data": [""]
+}
+```
+
+#### ❌ Validación del Book ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el libro por id",
+    "data": [""]
+}
+```
+<a name="19-contar-autores"></a>
+## 📊 19. Contar Autores [🔙](#indice)
+
+**Método:** `GET`  
+**Endpoint:** `/api/v1/authors/count`
+**Validación:** `ADMIN_ROLE`
+
+#### 📝 Descripción
+Obtiene el conteo total de autores registrados en el sistema.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": 3
+}
+
