@@ -812,6 +812,7 @@ Obtiene el conteo total de autores registrados en el sistema.
     "message": "OK",
     "data": 3
 }
+```
 
 <a name="20-crear-libro"></a>
 ## 📘 20. Crear Libro [🔙](#indice)
