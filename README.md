@@ -777,6 +777,7 @@ Elimina la asociación de un libro específico con el autor seleccionado.
     "message": "OK",
     "data": "Libro eliminado del autor correctamente"
 }
+```
 
 #### ❌ Validación del id del author
 ```json
