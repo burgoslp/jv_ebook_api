@@ -118,6 +118,7 @@ la api cuenta con multiples rutas que nos permite la creación, eliminación, ac
 - 📖 [17. Asociar Libro a Autor](#17-asociar-libro-a-autor)
 - 🗑️ [18. Eliminar Libro de Autor](#18-eliminar-libro-de-autor)
 - 📊 [19. Contar Autores](#19-contar-autores)
+- 📘 [20. Crear Libro](#20-crear-libro)
 ---
 
 <a name="1-crear-usuario"></a>
@@ -811,4 +812,73 @@ Obtiene el conteo total de autores registrados en el sistema.
     "message": "OK",
     "data": 3
 }
+
+<a name="20-crear-libro"></a>
+## 📘 20. Crear Libro [🔙](#indice)
+
+**Método:** `POST`  
+**Endpoint:** `/api/v1/books`
+**Validación:** `ADMIN_ROLE`
+
+#### 📝 Descripción
+Crea un nuevo libro en el sistema.
+
+#### 📥 Request Body
+```json
+{
+    "title": "titulo",
+    "publicationDate": "2025-05-05",
+    "publisher": "marianoRecords",
+    "isbn": "8874",
+    "synopsis": "resumen del libro",
+    "cover": "portada.jpg",
+    "available": 5
+}
+```
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": {
+        "id": 4,
+        "title": "titulo",
+        "publicationDate": "2025-05-05",
+        "publisher": "marianoRecords",
+        "isbn": "8874",
+        "synopsis": "resumen del libro",
+        "cover": "portada.jpg",
+        "available": 5
+    }
+}
+```
+
+#### ❌ Validación del Request Body
+```json
+{
+    "code": 400,
+    "message": "Algunos de los argumentos ingresados no son correctos",
+    "data": [
+        "available: no debe ser nulo",
+        "publisher: no debe estar vacío",
+        "publicationDate: no debe ser nulo",
+        "isbn: no debe estar vacío",
+        "cover: no debe estar vacío",
+        "title: no debe estar vacío",
+        "synopsis: no debe estar vacío"
+    ]
+}
+```
+
+#### ❌ Validación del Formato de Fecha
+```json
+{
+    "code": 400,
+    "message": "Algunos de los argumentos ingresados no son correctos",
+    "data": [
+        "publicationDate: la fecha de publicación debe tener el siguiente formato YYYY-MM-DD"
+    ]
+}
+```
 
