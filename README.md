@@ -119,6 +119,9 @@ la api cuenta con multiples rutas que nos permite la creación, eliminación, ac
 - 🗑️ [18. Eliminar Libro de Autor](#18-eliminar-libro-de-autor)
 - 📊 [19. Contar Autores](#19-contar-autores)
 - 📘 [20. Crear Libro](#20-crear-libro)
+- 📚 [21. Listar Todos los Libros](#21-listar-todos-los-libros)
+- 🔍 [22. Buscar Libro por ID con Detalles](#22-buscar-libro-por-id-con-detalles)
+- ❤️ [23. Obtener Usuarios que Dieron Like a Libro](#23-obtener-usuarios-que-dieron-like-a-libro)
 ---
 
 <a name="1-crear-usuario"></a>
@@ -880,6 +883,136 @@ Crea un nuevo libro en el sistema.
     "message": "Algunos de los argumentos ingresados no son correctos",
     "data": [
         "publicationDate: la fecha de publicación debe tener el siguiente formato YYYY-MM-DD"
+    ]
+}
+```
+<a name="21-listar-todos-los-libros"></a>
+## 📚 21. Listar Todos los Libros [🔙](#indice)
+
+**Método:** `GET`  
+**Endpoint:** `/api/v1/books`
+**Validación:** `SIN AUTENTICACIÓN`
+
+#### 📝 Descripción
+Muestra todos los libros registrados en la librería con su cantidad disponible.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": [
+        {
+            "id": 1,
+            "title": "Don Quijote de la Mancha",
+            "publicationDate": "1605-01-16",
+            "publisher": "Francisco de Robles",
+            "isbn": "978-1-56619-909-4",
+            "synopsis": "Las aventuras de un hidalgo que, influenciado por los libros de caballerías, decide convertirse en caballero andante y salir en busca de aventuras.",
+            "cover": "don_quijote.jpg",
+            "available": 4
+        },
+        {
+            "id": 2,
+            "title": "El Principito",
+            "publicationDate": "1943-04-06",
+            "publisher": "Reynal & Hitchcock",
+            "isbn": "978-1-56619-909-5",
+            "synopsis": "La historia de un piloto que, tras un accidente en el desierto del Sahara, encuentra a un pequeño príncipe venido de otro planeta.",
+            "cover": "el_principito.jpg",
+            "available": 5
+        }
+    ]
+}
+```
+<a name="22-buscar-libro-por-id-con-detalles"></a>
+## 🔍 22. Buscar Libro por ID con Detalles [🔙](#indice)
+
+**Método:** `GET`  
+**Endpoint:** `/api/v1/books/{id}`
+**Validación:** `SIN AUTENTICACIÓN `
+
+#### 📝 Descripción
+Muestra el detalle completo del libro seleccionado, incluyendo autores, comentarios y categorías.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": {
+        "id": 2,
+        "title": "El Principito",
+        "publicationDate": "1943-04-06",
+        "publisher": "Reynal & Hitchcock",
+        "isbn": "978-1-56619-909-5",
+        "synopsis": "La historia de un piloto que, tras un accidente en el desierto del Sahara, encuentra a un pequeño príncipe venido de otro planeta.",
+        "cover": "el_principito.jpg",
+        "available": 5,
+        "comments": [
+            {
+                "id": 1,
+                "description": "este libro es muy bueno",
+                "user": {
+                    "id": 3,
+                    "username": "pburgos",
+                    "email": "pinedo.burgoslp3@gmail.com"
+                }
+            }
+        ],
+        "authors": [
+            {
+                "id": 1,
+                "name": "Antoine",
+                "lastname": "de Saint-Exupéry",
+                "birthDate": "1900-06-29",
+                "nationality": "Francés",
+                "biography": "Fue un escritor y aviador francés, conocido principalmente por su obra El Principito.",
+                "createdAt": "2025-09-09T19:39:08",
+                "updatedAt": null,
+                "image": "Francés"
+            }
+        ],
+        "categories": [
+            {
+                "id": 2,
+                "name": "Clásicos",
+                "description": "Obras literarias que han perdurado a lo largo del tiempo y son consideradas de gran valor cultural."
+            }
+        ]
+    }
+}
+```
+#### ❌ Validación del Book ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el libro por id",
+    "data": [""]
+}
+```
+
+<a name="23-obtener-usuarios-que-dieron-like-a-libro"></a>
+## ❤️ 23. Obtener Usuarios que Dieron Like a Libro [🔙](#indice)
+
+**Método:** `GET`  
+**Endpoint:** `/api/v1/books/{id}/usersWhoLiked`
+**Validación:** `SIN AUTENTICACIÓN `
+
+#### 📝 Descripción
+Muestra todos los usuarios que han dado like al libro seleccionado.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": [
+        {
+            "id": 3,
+            "username": "pburgos",
+            "email": "pinedo.burgoslp3@gmail.com"
+        }
     ]
 }
 ```
