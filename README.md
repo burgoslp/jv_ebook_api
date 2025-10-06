@@ -124,6 +124,8 @@ la api cuenta con multiples rutas que nos permite la creación, eliminación, ac
 - ❤️ [23. Obtener Usuarios que Dieron Like a Libro](#23-obtener-usuarios-que-dieron-like-a-libro)
 - 📊 [24. Contar Likes de Libro](#24-contar-likes-de-libro)
 - 🏷️ [25. Agregar Categoría a Libro](#25-agregar-categoría-a-libro)
+- 🗑️ [26. Eliminar Categoría de Libro](#26-eliminar-categoría-de-libro)
+- 📊 [27. Contar Libros](#27-contar-libros)
 ---
 
 <a name="1-crear-usuario"></a>
@@ -1100,5 +1102,57 @@ Agrega una categoría específica a un libro.
     "data": [""]
 }
 ```
+<a name="26-eliminar-categoría-de-libro"></a>
+## 🗑️ 26. Eliminar Categoría de Libro [🔙](#indice)
 
+**Método:** `DELETE`  
+**Endpoint:** `/api/v1/books/{id}/categories/{idCategory}`
+**Validación:** `ADMIN_ROLE`
 
+#### 📝 Descripción
+Elimina una categoría específica de un libro.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": "Categoría eliminada correctamente"
+}
+```
+
+#### ❌ Validación del Book ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el libro por id",
+    "data": [""]
+}
+```
+
+#### ❌ Validación del Category ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró la categoría por id",
+    "data": [""]
+}
+```
+<a name="27-contar-libros"></a>
+## 📊 27. Contar Libros [🔙](#indice)
+
+**Método:** `GET`  
+**Endpoint:** `/api/v1/books/count`
+**Validación:** `ADMIN_ROLE`
+
+#### 📝 Descripción
+Muestra la cantidad total de libros ingresados en el sistema.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": 4
+}
+```
