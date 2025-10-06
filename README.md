@@ -122,6 +122,8 @@ la api cuenta con multiples rutas que nos permite la creación, eliminación, ac
 - 📚 [21. Listar Todos los Libros](#21-listar-todos-los-libros)
 - 🔍 [22. Buscar Libro por ID con Detalles](#22-buscar-libro-por-id-con-detalles)
 - ❤️ [23. Obtener Usuarios que Dieron Like a Libro](#23-obtener-usuarios-que-dieron-like-a-libro)
+- 📊 [24. Contar Likes de Libro](#24-contar-likes-de-libro)
+- 🏷️ [25. Agregar Categoría a Libro](#25-agregar-categoría-a-libro)
 ---
 
 <a name="1-crear-usuario"></a>
@@ -1016,4 +1018,87 @@ Muestra todos los usuarios que han dado like al libro seleccionado.
     ]
 }
 ```
+
+#### ❌ Validación del Book ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el libro por id",
+    "data": [""]
+}
+```
+
+<a name="24-contar-likes-de-libro"></a>
+## 📊 24. Contar Likes de Libro [🔙](#indice)
+
+**Método:** `GET`  
+**Endpoint:** `/api/v1/books/{id}/countLikes`
+**Validación:** `SIN AUTENTICACIÓN `
+
+#### 📝 Descripción
+Obtiene el conteo total de likes que ha recibido el libro seleccionado.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": 1
+}
+
+#### ❌ Validación del Book ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el libro por id",
+    "data": [""]
+}
+```
+
+<a name="25-agregar-categoría-a-libro"></a>
+## 🏷️ 25. Agregar Categoría a Libro [🔙](#indice)
+
+**Método:** `POST`  
+**Endpoint:** `/api/v1/books/{bookId}/categories/{categoryId}`
+**Validación:** `ADMIN_ROLE`
+
+#### 📝 Descripción
+Agrega una categoría específica a un libro.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": "Categoría añadida correctamente"
+}
+```
+
+#### ❌ Validación de Categoría Repetida
+```json
+{
+    "code": 404,
+    "message": "La categoría ya está asociada al libro",
+    "data": [""]
+}
+```
+
+#### ❌ Validación del Book ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el libro por id",
+    "data": [""]
+}
+```
+
+#### ❌ Validación del Category ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró la categoría por id",
+    "data": [""]
+}
+```
+
 
