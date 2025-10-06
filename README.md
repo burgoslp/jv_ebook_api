@@ -1143,7 +1143,7 @@ Elimina una categoría específica de un libro.
 
 **Método:** `GET`  
 **Endpoint:** `/api/v1/books/count`
-**Validación:** `ADMIN_ROLE`
+**Validación:** `SIN AUTENTICACIÓN`
 
 #### 📝 Descripción
 Muestra la cantidad total de libros ingresados en el sistema.
