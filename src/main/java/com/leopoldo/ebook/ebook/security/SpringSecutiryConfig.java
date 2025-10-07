@@ -51,7 +51,7 @@ public class SpringSecutiryConfig {
                 .requestMatchers(HttpMethod.GET,"/api/v1/authors/count").permitAll()
                 .requestMatchers(HttpMethod.GET,"/api/v1/books").permitAll()
                 .requestMatchers(HttpMethod.GET,"/api/v1/books/{bookId}/usersWhoLiked").permitAll()
-                .requestMatchers(HttpMethod.GET,"/api/v1/books/{bookId}/likes").permitAll()
+                .requestMatchers(HttpMethod.GET,"/api/v1/books/{bookId}/countLikes").permitAll()
                 .requestMatchers(HttpMethod.GET,"/api/v1/books/{id}").permitAll()
                 .requestMatchers(HttpMethod.GET,"/api/v1/books/count").permitAll()
                 .requestMatchers(HttpMethod.GET,"/api/v1/books/countByCategory").permitAll()
@@ -64,14 +64,15 @@ public class SpringSecutiryConfig {
                 .requestMatchers(HttpMethod.DELETE,"/api/v1/authors/{id}").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST,"/api/v1/authors/{authorId}/books/{bookId}").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE,"/api/v1/authors/{authorId}/books/{bookId}").hasRole("ADMIN")
+                
                 .requestMatchers(HttpMethod.POST,"/api/v1/books").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST,"/api/v1/books/{bookId}/categories/{idCategory}").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE,"/api/v1/books/{bookId}/categories/{idCategory}").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET,"/api/v1/excel").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET,"/api/v1/loans").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST,"/api/v1/loans/aprove/{id}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST,"/api/v1/loans/rejected/{id}").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST,"/api/v1/loans/returned/{id}").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.POST,"api/v1/loans/rejected/{id}").hasRole("ADMIN")
 
                 
                 .anyRequest().authenticated()

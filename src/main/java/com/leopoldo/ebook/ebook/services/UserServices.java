@@ -127,7 +127,7 @@ public class UserServices implements IUserServices {
         return JsonApiResponse.builder()
                 .code(HttpStatus.OK.value())
                 .message(HttpStatus.OK.getReasonPhrase())
-                .data("Usuario eliminado")
+                .data("Usuario y todos sus datos asociados han sido eliminados")
                 .build();
 
     }

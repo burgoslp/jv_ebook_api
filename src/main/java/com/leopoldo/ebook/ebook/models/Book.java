@@ -1,5 +1,5 @@
 package com.leopoldo.ebook.ebook.models;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -47,9 +47,9 @@ public class Book {
     @NotBlank
     private String title;
 
-    @Column(name = "publication_date", columnDefinition = "DATE")
+    @Column(name = "publication_date", columnDefinition = "DATETIME")
     @NotNull
-    private LocalDate publicationDate;
+    private LocalDateTime publicationDate;
 
     @NotBlank
     private String publisher;

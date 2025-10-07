@@ -58,7 +58,7 @@ public class jwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
                 String token = Jwts.builder()
                         .subject(username)
-                        .expiration(new Date(System.currentTimeMillis() + 5 * 60 * 1000)) // 5 minutos
+                        .expiration(new Date(System.currentTimeMillis() +  2 * 60 * 60 * 1000)) // 2 HORA
                         .issuedAt(new Date())
                         .claim("authorities", user.getAuthorities().stream().map( Object::toString ).toList())
                         .claim("username", username)

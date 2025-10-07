@@ -1,5 +1,5 @@
 package com.leopoldo.ebook.ebook.services;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +39,7 @@ public class BookServices implements IBookServices {
 
         Book book = Book.builder()
                 .title(bookCreateDto.getTitle())
-                .publicationDate(LocalDate.parse(bookCreateDto.getPublicationDate()))
+                .publicationDate(LocalDateTime.parse(bookCreateDto.getPublicationDate()))
                 .publisher(bookCreateDto.getPublisher())
                 .isbn(bookCreateDto.getIsbn())
                 .synopsis(bookCreateDto.getSynopsis())

@@ -48,7 +48,7 @@ public class BookController {
         return ResponseEntity.ok().body(bs.usersWhoLiked(bookId));
     }
 
-    @GetMapping("/{bookId}/likes")
+    @GetMapping("/{bookId}/countLikes")
     public ResponseEntity<JsonApiResponse> countLikes(@PathVariable Long bookId) {
         return ResponseEntity.ok().body(bs.countLikes(bookId));
     }

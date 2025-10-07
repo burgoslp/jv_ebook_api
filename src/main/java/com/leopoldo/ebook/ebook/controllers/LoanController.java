@@ -40,7 +40,7 @@ public class LoanController {
         return ResponseEntity.status(HttpStatus.CREATED.value()).body(ls.request(loanRequestCreateDto));
     }
 
-    @PostMapping("/reject/{id}")
+    @PostMapping("/rejected/{id}")
     public ResponseEntity<JsonApiResponse> reject(@PathVariable Long id) {
         
         return ResponseEntity.status(HttpStatus.OK.value()).body(ls.reject(id));

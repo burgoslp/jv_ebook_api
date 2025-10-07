@@ -1,6 +1,5 @@
 package com.leopoldo.ebook.ebook.models;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import jakarta.persistence.CascadeType;
@@ -38,8 +37,8 @@ public class Author {
     private String lastname;
 
     @NotNull
-    @Column(name = "birth_date", columnDefinition = "DATE")
-    private LocalDate birthDate;
+    @Column(name = "birth_date", columnDefinition = "DATETIME")
+    private LocalDateTime birthDate;
 
     @NotBlank
     private String nationality;

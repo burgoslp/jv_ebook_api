@@ -1,7 +1,6 @@
 package com.leopoldo.ebook.ebook.dtos.Book;
 
-import java.time.LocalDate;
-
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +14,7 @@ public class BookSumaryDto {
 
     private long id;
     private String title;
-    private LocalDate publicationDate;
+    private LocalDateTime publicationDate;
     private String publisher;
     private String isbn;
     private String synopsis;

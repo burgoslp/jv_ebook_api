@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 
 @RestController
-@RequestMapping("api/v1/excel")
+@RequestMapping("api/v1/excels")
 public class ExcelController {
 
     @Autowired
     private GeneratorExcelServices ges;
 
-    @GetMapping()
+    @GetMapping("/report/general")
     public ResponseEntity<byte[]> generalReport() throws Exception {
         byte[] excel = ges.excelGeneralReport();
         return ResponseEntity.ok()
