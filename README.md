@@ -1051,7 +1051,7 @@ Obtiene el conteo total de likes que ha recibido el libro seleccionado.
     "message": "OK",
     "data": 1
 }
-
+```
 #### ❌ Validación del Book ID
 ```json
 {
