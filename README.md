@@ -130,6 +130,10 @@ la api cuenta con multiples rutas que nos permite la creación, eliminación, ac
 - 💬 [29. Crear Comentario](#29-crear-comentario)
 - 📊 [30. Exportar Reporte General Excel](#30-exportar-reporte-general-excel)
 - 📚 [31. Solicitar Préstamo](#31-solicitar-préstamo)
+- 📋 [32. Listar Todos los Préstamos](#32-listar-todos-los-préstamos)
+- ✅ [33. Aprobar Préstamo](#33-aprobar-préstamo)
+- 🔄 [34. Devolver Préstamo](#34-devolver-préstamo)
+- ❌ [35. Rechazar Préstamo](#35-rechazar-préstamo)
 ---
 
 <a name="1-crear-usuario"></a>
@@ -1265,6 +1269,7 @@ Exporta un archivo en formato XML que puede ser abierto como Excel para visualiz
 
 **Método:** `POST`  
 **Endpoint:** `/api/v1/loans/request`
+**Validación:** `USER_ROLE`
 
 #### 📝 Descripción
 Crea una solicitud de préstamo para un libro y envía un correo electrónico de notificación al usuario.
@@ -1312,5 +1317,144 @@ Crea una solicitud de préstamo para un libro y envía un correo electrónico de
     "data": [""]
 }
 ```
+
+<a name="32-listar-todos-los-préstamos"></a>
+## 📋 32. Listar Todos los Préstamos [🔙](#indice)
+
+**Método:** `GET`  
+**Endpoint:** `/api/v1/loans`
+**Validación:** `ADMIN_ROLE`
+
+#### 📝 Descripción
+Muestra todos los préstamos solicitados por los usuarios para los libros.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": [
+        {
+            "id": 1,
+            "user": {
+                "id": 3,
+                "username": "pburgos",
+                "email": "pinedo.burgoslp3@gmail.com"
+            },
+            "book": {
+                "id": 1,
+                "title": "Don Quijote de la Mancha",
+                "publicationDate": "1605-01-16",
+                "publisher": "Francisco de Robles",
+                "isbn": "978-1-56619-909-4",
+                "synopsis": "Las aventuras de un hidalgo que, influenciado por los libros de caballerías, decide convertirse en caballero andante y salir en busca de aventuras.",
+                "cover": "don_quijote.jpg",
+                "available": 4
+            },
+            "status": "pending",
+            "requestDate": "2025-10-07T09:50:50",
+            "loanDate": null,
+            "returnDate": null
+        }
+    ]
+}
+```
+<a name="33-aprobar-préstamo"></a>
+## ✅ 33. Aprobar Préstamo [🔙](#indice)
+
+**Método:** `POST`  
+**Endpoint:** `/api/v1/loans/aprove/{idLoan}`
+**Validación:** `ADMIN_ROLE`
+
+#### 📝 Descripción
+Aprueba el préstamo seleccionado que está en estado pendiente. Una vez aprobado, se notificará al usuario mediante correo electrónico con la información de la fecha de devolución del mismo.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": "Prestamo Aprobado con exito"
+}
+```
+
+#### ❌ del id del prestamo
+```json
+{
+    "code": 404,
+    "message": "No se encontró el prestamo solicitado",
+    "data": [
+        ""
+    ]
+}
+```
+<a name="34-devolver-préstamo"></a>
+## 🔄 34. Devolver Préstamo [🔙](#indice)
+
+**Método:** `POST`  
+**Endpoint:** `/api/v1/loans/returned/{idloan}`
+**Validación:** `ADMIN_ROLE`
+
+#### 📝 Descripción
+Realiza la devolución del libro que el usuario ha realizado, recalculando las cantidades disponibles a su estado inicial anterior al préstamo.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": "Prestamo Devuelto con exito"
+}
+```
+
+#### ❌ Validación del Loan ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el prestamo solicitado",
+    "data": [""]
+}
+```
+
+
+#### ❌ Validación del Estado del Préstamo
+```json
+{
+    "code": 404,
+    "message": "El prestamo solicitado no ha sido aprovado o fué descartado",
+    "data": [""]
+}
+```
+
+<a name="35-rechazar-préstamo"></a>
+## ❌ 35. Rechazar Préstamo [🔙](#indice)
+
+**Método:** `POST`  
+**Endpoint:** `/api/v1/loans/rejected/{id}`
+
+#### 📝 Descripción
+Rechaza los préstamos de libros solicitados por los usuarios y notifica al usuario mediante correo electrónico.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": "Prestamo Rechazado con exito"
+}
+```
+
+#### ❌ Validación del Loan ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el prestamo solicitado",
+    "data": [""]
+}
+```
+
+
+
+
 
 
