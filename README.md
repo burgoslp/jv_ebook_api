@@ -1512,7 +1512,7 @@ Obtiene todos los préstamos que ha realizado un usuario específico.
 **Validación:** `SIN AUTENTICACIÓN`
 
 #### 📝 Descripción
-Autentica a un usuario en el sistema y genera un token de acceso.
+Autentica a un usuario en el sistema y genera un token de acceso, la duracción del token es de 2 horas luego de ser generado.
 
 #### ✅ Respuesta Exitosa
 ```json
