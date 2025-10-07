@@ -1,6 +1,9 @@
 package com.leopoldo.ebook.ebook.dtos.Author;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import com.leopoldo.ebook.ebook.dtos.Nationality.NationalitySumaryDto;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -22,13 +25,12 @@ public class AuthorSumaryDto {
     @NotNull
     private LocalDate birthDate;
     @NotBlank
-    private String nationality;
-    @NotBlank
     private String biography;
     @NotNull
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     //campo opcional
     private String image;
+    private NationalitySumaryDto nationality;
 
 }

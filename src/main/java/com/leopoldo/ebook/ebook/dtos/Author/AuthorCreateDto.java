@@ -20,7 +20,7 @@ public class AuthorCreateDto {
     @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "la fecha de nacimiento debe tener el siguiente formato YYYY-MM-DD")
     private String birthDate;
     @NotBlank
-    private String nationality;
+    private Long nationalityId;
     @NotBlank
     private String biography;
     //campo opcional

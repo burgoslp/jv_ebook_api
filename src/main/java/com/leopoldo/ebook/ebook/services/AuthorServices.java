@@ -12,8 +12,10 @@ import com.leopoldo.ebook.ebook.exeptions.ApiException;
 import com.leopoldo.ebook.ebook.mappers.AuthorMapper;
 import com.leopoldo.ebook.ebook.models.Author;
 import com.leopoldo.ebook.ebook.models.Book;
+import com.leopoldo.ebook.ebook.models.Nationality;
 import com.leopoldo.ebook.ebook.repositories.IAuthorRepository;
 import com.leopoldo.ebook.ebook.repositories.IBookRepository;
+import com.leopoldo.ebook.ebook.repositories.INationalityRepository;
 import com.leopoldo.ebook.ebook.services.interfaces.IAuthorServices;
 
 @Service
@@ -26,17 +28,20 @@ public class AuthorServices implements IAuthorServices {
     private IBookRepository br;
 
     @Autowired
+    private INationalityRepository nr;
+
+    @Autowired
     private AuthorMapper authorMapper;
 
     @Override
     public JsonApiResponse save(AuthorCreateDto authorCreateDto) {
-
+        Nationality nationality= nr.findById(authorCreateDto.getNationalityId()).orElseThrow(() -> new ApiException(ApiError.NATIONALITY_BYID_NOT_FOUND));
 
         Author author = Author.builder()
                                 .name(authorCreateDto.getName())
                                 .lastname(authorCreateDto.getLastname())
                                 .birthDate(LocalDateTime.parse(authorCreateDto.getBirthDate()))
-                                .nationality(authorCreateDto.getNationality())
+                                .nationality(nationality)
                                 .biography(authorCreateDto.getBiography())
                                 .image(authorCreateDto.getImage())
                                 .createdAt(LocalDateTime.now())

@@ -21,7 +21,8 @@ public enum ApiError {
     LOAN_BYID_NOT_FOUND(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, "No se encontró el prestamo solicitado",List.of("")),
     LOAN_VALIDATION_ERROR(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, "El prestamo solicitado no ha sido aprovado o fué descartado",List.of("")),
     LOAN_VALIDATION_REJECTED_ERROR(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, "El prestamo solicitado ya ha sido aprovado o fué descartado",List.of("")),
-    LOAN_BYUSERID_NOT_FOUND(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, "No se encontraron prestamos para el usuario indicado",List.of(""));
+    LOAN_BYUSERID_NOT_FOUND(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, "No se encontraron prestamos para el usuario indicado",List.of("")),
+    NATIONALITY_BYID_NOT_FOUND(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, "No se encontró la nacionalidad por id",List.of(""));
 
     private final Integer code;
     private final HttpStatus httpStatus;

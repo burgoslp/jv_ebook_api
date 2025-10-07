@@ -8,7 +8,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -30,6 +32,10 @@ public class Author {
     @ManyToMany(cascade =  {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Book> books;
 
+    @ManyToOne
+    @JoinColumn(name = "nationality_id")
+    private Nationality nationality;
+
     @NotBlank
     private String name;
 
@@ -40,8 +46,6 @@ public class Author {
     @Column(name = "birth_date", columnDefinition = "DATETIME")
     private LocalDateTime birthDate;
 
-    @NotBlank
-    private String nationality;
 
     @Column(length = 1000)
     @NotBlank

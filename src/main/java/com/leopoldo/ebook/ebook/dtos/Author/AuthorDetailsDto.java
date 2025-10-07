@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.leopoldo.ebook.ebook.dtos.Book.BookSumaryDto;
+import com.leopoldo.ebook.ebook.dtos.Nationality.NationalitySumaryDto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -25,8 +26,7 @@ public class AuthorDetailsDto {
     private String lastname;
     @NotNull
     private LocalDate birthDate;
-    @NotBlank
-    private String nationality;
+  
     @NotBlank
     private String biography;
     @NotNull
@@ -35,4 +35,5 @@ public class AuthorDetailsDto {
     //campo opcional
     private String image;
     private List<BookSumaryDto> books;
+    private NationalitySumaryDto nationality;
 }
