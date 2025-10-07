@@ -91,7 +91,8 @@ La API permite exportar reportes en formato Excel con información sobre:
 - Reporte general
 
 ## Diagrama de la base de datos:
-<img width="1257" height="1157" alt="libros" src="https://github.com/user-attachments/assets/5170797d-8d30-49df-8435-c661ffca71eb" />
+<img width="1392" height="1224" alt="libros(1)" src="https://github.com/user-attachments/assets/78db12c5-1cf8-49fb-bde5-ebeb25dcff4f" />
+
 
 ## 📜 Listado de endpoints 
 la api cuenta con multiples rutas que nos permite la creación, eliminación, actualización y lectura del aplicativo.
