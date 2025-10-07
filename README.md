@@ -135,6 +135,7 @@ la api cuenta con multiples rutas que nos permite la creación, eliminación, ac
 - 🔄 [34. Devolver Préstamo](#34-devolver-préstamo)
 - ❌ [35. Rechazar Préstamo](#35-rechazar-préstamo)
 - 👤 [36. Obtener Préstamos por Usuario](#36-obtener-préstamos-por-usuario)
+- 🔐 [37. Login de Usuario](#37-login-de-usuario)
 ---
 
 <a name="1-crear-usuario"></a>
@@ -1460,7 +1461,7 @@ Rechaza los préstamos de libros solicitados por los usuarios y notifica al usua
 
 **Método:** `GET`  
 **Endpoint:** `/api/v1/loans/user/{id}`
-
+**Validación:** `USER_ROLE`
 #### 📝 Descripción
 Obtiene todos los préstamos que ha realizado un usuario específico.
 
@@ -1503,4 +1504,24 @@ Obtiene todos los préstamos que ha realizado un usuario específico.
     "data": [""]
 }
 ```
+<a name="37-login-de-usuario"></a>
+## 🔐 37. Login de Usuario [🔙](#indice)
 
+**Método:** `POST`  
+**Endpoint:** `/api/v1/login`
+**Validación:** `SIN AUTENTICACIÓN`
+
+#### 📝 Descripción
+Autentica a un usuario en el sistema y genera un token de acceso.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "message": "Usuario autenticado correctamente",
+    "username": "pburgos",
+    "roles": [
+        "ROLE_ADMIN",
+        "ROLE_USER"
+    ],
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYnVyZ29zIiwiZXhwIjoxNzU5ODU1OTMwLCJpYXQiOjE3NTk4NDg3MzAsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJwYnVyZ29zIn0.mNtOnDqoRiKI-Mf_gtmefgrHJnjXPzytLKNZnlX7Ijg"
+}
