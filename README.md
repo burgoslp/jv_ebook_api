@@ -134,6 +134,7 @@ la api cuenta con multiples rutas que nos permite la creación, eliminación, ac
 - ✅ [33. Aprobar Préstamo](#33-aprobar-préstamo)
 - 🔄 [34. Devolver Préstamo](#34-devolver-préstamo)
 - ❌ [35. Rechazar Préstamo](#35-rechazar-préstamo)
+- 👤 [36. Obtener Préstamos por Usuario](#36-obtener-préstamos-por-usuario)
 ---
 
 <a name="1-crear-usuario"></a>
@@ -1431,6 +1432,7 @@ Realiza la devolución del libro que el usuario ha realizado, recalculando las c
 
 **Método:** `POST`  
 **Endpoint:** `/api/v1/loans/rejected/{id}`
+**Validación:** `ADMIN_ROLE`
 
 #### 📝 Descripción
 Rechaza los préstamos de libros solicitados por los usuarios y notifica al usuario mediante correo electrónico.
@@ -1453,8 +1455,52 @@ Rechaza los préstamos de libros solicitados por los usuarios y notifica al usua
 }
 ```
 
+<a name="36-obtener-préstamos-por-usuario"></a>
+## 👤 36. Obtener Préstamos por Usuario [🔙](#indice)
 
+**Método:** `GET`  
+**Endpoint:** `/api/v1/loans/user/{id}`
 
+#### 📝 Descripción
+Obtiene todos los préstamos que ha realizado un usuario específico.
 
-
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": [
+        {
+            "id": 2,
+            "user": {
+                "id": 4,
+                "username": "pburg",
+                "email": "pinedo.burgoslp3@gmail.com"
+            },
+            "book": {
+                "id": 3,
+                "title": "Cien Años de Soledad",
+                "publicationDate": "1967-05-30",
+                "publisher": "Editorial Sudamericana",
+                "isbn": "978-1-56619-909-6",
+                "synopsis": "Una novela que narra la historia de la familia Buendía a lo largo de varias generaciones en el pueblo ficticio de Macondo.",
+                "cover": "cien_anos_de_soledad.jpg",
+                "available": 3
+            },
+            "status": "pending",
+            "requestDate": "2025-10-07T10:10:08",
+            "loanDate": null,
+            "returnDate": null
+        }
+    ]
+}
+```
+#### ❌ Validación del User ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el usuario por id",
+    "data": [""]
+}
+```
 
