@@ -126,6 +126,10 @@ la api cuenta con multiples rutas que nos permite la creación, eliminación, ac
 - 🏷️ [25. Agregar Categoría a Libro](#25-agregar-categoría-a-libro)
 - 🗑️ [26. Eliminar Categoría de Libro](#26-eliminar-categoría-de-libro)
 - 📊 [27. Contar Libros](#27-contar-libros)
+- 📈 [28. Contar Libros por Categoría](#28-contar-libros-por-categoría)
+- 💬 [29. Crear Comentario](#29-crear-comentario)
+- 📊 [30. Exportar Reporte General Excel](#30-exportar-reporte-general-excel)
+- 📚 [31. Solicitar Préstamo](#31-solicitar-préstamo)
 ---
 
 <a name="1-crear-usuario"></a>
@@ -1156,3 +1160,157 @@ Muestra la cantidad total de libros ingresados en el sistema.
     "data": 4
 }
 ```
+
+<a name="28-contar-libros-por-categoría"></a>
+## 📈 28. Contar Libros por Categoría [🔙](#indice)
+
+**Método:** `GET`  
+**Endpoint:** `/api/v1/books/countByCategory`
+**Validación:** `SIN AUTENTICACIÓN`
+
+#### 📝 Descripción
+Muestra todas las categorías y la cantidad de libros asociados a cada una.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": [
+        {
+            "categoryName": "Clásicos",
+            "totalBooks": 6
+        },
+        {
+            "categoryName": "Aventura",
+            "totalBooks": 5
+        },
+        {
+            "categoryName": "Fantasía",
+            "totalBooks": 16
+        },
+        {
+            "categoryName": "terror",
+            "totalBooks": 3
+        },
+        {
+            "categoryName": "drama",
+            "totalBooks": 4
+        }
+    ]
+}
+```
+
+<a name="29-crear-comentario"></a>
+## 💬 29. Crear Comentario [🔙](#indice)
+
+**Método:** `POST`  
+**Endpoint:** `/api/v1/comments`
+**Validación:** `USER_ROLE`
+
+#### 📝 Descripción
+Crea un comentario en un libro específico.
+
+#### 📥 Request Body
+```json
+{
+    "description": "este libro es muy bueno",
+    "userId": 3,
+    "bookId": 2
+}
+```
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": "Comentario guardado con exito"
+}
+```
+
+#### ❌ Validación del User ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el usuario por id",
+    "data": [""]
+}
+```
+
+#### ❌ Validación del Book ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el libro por id",
+    "data": [""]
+}
+```
+
+<a name="30-exportar-reporte-general-excel"></a>
+## 📊 30. Exportar Reporte General Excel [🔙](#indice)
+
+**Método:** `GET`  
+**Endpoint:** `/api/v1/excels/report/general`
+**Validación:** `ADMIN_ROLE`
+
+#### 📝 Descripción
+Exporta un archivo en formato XML que puede ser abierto como Excel para visualizar un análisis general de la librería.
+
+#### ✅ imagen del reporte
+<img width="911" height="306" alt="imagen" src="https://github.com/user-attachments/assets/b0a50c7c-ec73-4657-ba71-581f8ed30289" />
+
+<a name="31-solicitar-préstamo"></a>
+## 📚 31. Solicitar Préstamo [🔙](#indice)
+
+**Método:** `POST`  
+**Endpoint:** `/api/v1/loans/request`
+
+#### 📝 Descripción
+Crea una solicitud de préstamo para un libro y envía un correo electrónico de notificación al usuario.
+
+#### 📥 Request Body
+```json
+{
+    "userId": "1",
+    "bookId": "1"
+}
+```
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 201,
+    "message": "Created",
+    "data": "Prestamo Solicitado con exito"
+}
+```
+
+#### ❌Validación del Book ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el libro por id",
+    "data": [""]
+}
+```
+
+#### ❌ Validación del User ID
+```json
+{
+    "code": 404,
+    "message": "No se encontró el usuario por id",
+    "data": [""]
+}
+```
+
+#### ❌ Validación de Stock del Libro
+```json
+{
+    "code": 404,
+    "message": "El libro no tiene existencias disponibles en este momento",
+    "data": [""]
+}
+```
+
+
