@@ -1538,6 +1538,7 @@ Autentica a un usuario en el sistema y genera un token de acceso, la duracción 
 
 **Método:** `GET`  
 **Endpoint:** `/api/v1/nationalities`
+**Validación:** `ADMIN_ROLE`
 
 #### 📝 Descripción
 Obtiene todas las nacionalidades disponibles para registrar los autores.
