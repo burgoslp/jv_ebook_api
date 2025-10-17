@@ -139,6 +139,7 @@ la api cuenta con multiples rutas que nos permite la creación, eliminación, ac
 - ❌ [35. Rechazar Préstamo](#35-rechazar-préstamo)
 - 👤 [36. Obtener Préstamos por Usuario](#36-obtener-préstamos-por-usuario)
 - 🔐 [37. Login de Usuario](#37-login-de-usuario)
+- 🌍 [38. Obtener Nacionalidades](#38-obtener-nacionalidades)
 ---
 
 <a name="1-crear-usuario"></a>
@@ -569,13 +570,13 @@ Crea un nuevo autor en el sistema.
 
 #### 📥 Request Body
 ```json
-{
-    "name": "alfredo",
-    "lastname": "vargas",
+{   
+    "name":"alfredo",
+    "lastname":"vargas",
     "birthDate": "2025-12-05",
-    "biography": "una description de su vida aqui",
-    "nationality": "venezolano",
-    "image": "book.jpg"
+    "biography":"una description de su vida aqui",
+    "nationalityId":"6",
+    "image":"book.jpg"
 }
 ```
 #### ✅ Respuesta Exitosa
@@ -587,12 +588,14 @@ Crea un nuevo autor en el sistema.
         "id": 4,
         "name": "alfredo",
         "lastname": "vargas",
-        "birthDate": "2025-12-05",
-        "nationality": "venezolano",
+        "birthDate": "2025-12-05T00:00:00",
         "biography": "una description de su vida aqui",
-        "createdAt": "2025-10-01T11:24:24.6659092",
+        "createdAt": "2025-10-08T12:00:28.0855917",
         "updatedAt": null,
-        "image": "book.jpg"
+        "image": "book.jpg",
+        "nationality": {
+            "demonym": "Antiguano"
+        }
     }
 }
 ```
@@ -1528,3 +1531,42 @@ Autentica a un usuario en el sistema y genera un token de acceso, la duracción 
     ],
     "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYnVyZ29zIiwiZXhwIjoxNzU5ODU1OTMwLCJpYXQiOjE3NTk4NDg3MzAsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJwYnVyZ29zIn0.mNtOnDqoRiKI-Mf_gtmefgrHJnjXPzytLKNZnlX7Ijg"
 }
+```
+
+<a name="38-obtener-nacionalidades"></a>
+## 🌍 38. Obtener Nacionalidades [🔙](#indice)
+
+**Método:** `GET`  
+**Endpoint:** `/api/v1/nationalities`
+**Validación:** `ADMIN_ROLE`
+
+#### 📝 Descripción
+Obtiene todas las nacionalidades disponibles para registrar los autores.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": [
+        {
+            "id": 1,
+            "name": "Afganistán",
+            "demonym": "Afgano",
+            "isoCode": "AFG"
+        },
+        {
+            "id": 2,
+            "name": "Albania",
+            "demonym": "Albanés",
+            "isoCode": "ALB"
+        },
+        {
+            "id": 3,
+            "name": "Alemania",
+            "demonym": "Alemán",
+            "isoCode": "DEU"
+        }
+    ]
+}
+```
