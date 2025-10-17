@@ -1,6 +1,6 @@
 package com.leopoldo.ebook.ebook.dtos.Author;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,9 +17,8 @@ public class AuthorCreateDto {
     @NotBlank
     private String lastname;
     @NotBlank
-    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "la fecha de nacimiento debe tener el siguiente formato YYYY-MM-DD")
     private String birthDate;
-    @NotBlank
+    @NotNull
     private Long nationalityId;
     @NotBlank
     private String biography;

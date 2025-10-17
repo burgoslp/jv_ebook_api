@@ -1,5 +1,4 @@
 package com.leopoldo.ebook.ebook.dtos.Author;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class AuthorDetailsDto {
     @NotBlank
     private String lastname;
     @NotNull
-    private LocalDate birthDate;
+    private LocalDateTime birthDate;
   
     @NotBlank
     private String biography;

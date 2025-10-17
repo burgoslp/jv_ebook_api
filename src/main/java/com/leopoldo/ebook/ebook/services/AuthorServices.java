@@ -1,4 +1,5 @@
 package com.leopoldo.ebook.ebook.services;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -35,12 +36,13 @@ public class AuthorServices implements IAuthorServices {
 
     @Override
     public JsonApiResponse save(AuthorCreateDto authorCreateDto) {
+
         Nationality nationality= nr.findById(authorCreateDto.getNationalityId()).orElseThrow(() -> new ApiException(ApiError.NATIONALITY_BYID_NOT_FOUND));
 
         Author author = Author.builder()
                                 .name(authorCreateDto.getName())
                                 .lastname(authorCreateDto.getLastname())
-                                .birthDate(LocalDateTime.parse(authorCreateDto.getBirthDate()))
+                                .birthDate(LocalDate.parse(authorCreateDto.getBirthDate()).atStartOfDay())
                                 .nationality(nationality)
                                 .biography(authorCreateDto.getBiography())
                                 .image(authorCreateDto.getImage())

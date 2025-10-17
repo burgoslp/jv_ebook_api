@@ -1,5 +1,4 @@
 package com.leopoldo.ebook.ebook.dtos.Author;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.leopoldo.ebook.ebook.dtos.Nationality.NationalitySumaryDto;
@@ -23,7 +22,7 @@ public class AuthorSumaryDto {
     @NotBlank
     private String lastname;
     @NotNull
-    private LocalDate birthDate;
+    private LocalDateTime birthDate;
     @NotBlank
     private String biography;
     @NotNull
