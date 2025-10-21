@@ -141,6 +141,7 @@ la api cuenta con multiples rutas que nos permite la creación, eliminación, ac
 - 👤 [36. Obtener Préstamos por Usuario](#36-obtener-préstamos-por-usuario)
 - 🔐 [37. Login de Usuario](#37-login-de-usuario)
 - 🌍 [38. Obtener Nacionalidades](#38-obtener-nacionalidades)
+- 📊 [39. Obtener Estados de Préstamo](#39-obtener-estados-de-préstamo)
 ---
 
 <a name="1-crear-usuario"></a>
@@ -1567,6 +1568,45 @@ Obtiene todas las nacionalidades disponibles para registrar los autores.
             "name": "Alemania",
             "demonym": "Alemán",
             "isoCode": "DEU"
+        }
+    ]
+}
+```
+
+<a name="39-obtener-estados-de-préstamo"></a>
+## 📊 39. Obtener Estados de Préstamo [🔙](#indice)
+
+**Método:** `GET`  
+**Endpoint:** `/api/v1/status`
+
+#### 📝 Descripción
+Obtiene todos los estados disponibles para los préstamos del sistema.
+
+#### ✅ Respuesta Exitosa
+```json
+{
+    "code": 200,
+    "message": "OK",
+    "data": [
+        {
+            "id": 1,
+            "name": "aproved",
+            "description": "El prestamo ha sido aprobado."
+        },
+        {
+            "id": 2,
+            "name": "pending",
+            "description": "El prestamo esta pendiente para su revisión."
+        },
+        {
+            "id": 3,
+            "name": "rejected",
+            "description": "El prestamo ha sido rechazado por revisión."
+        },
+        {
+            "id": 4,
+            "name": "returned",
+            "description": "El prestamo ha finalizado y se ha devuelto el libro con exito."
         }
     ]
 }
