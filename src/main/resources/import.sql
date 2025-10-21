@@ -193,6 +193,11 @@ INSERT INTO `nationalities` (`name`, `demonym`, `iso_code`) VALUES ('Yibuti', 'Y
 INSERT INTO `nationalities` (`name`, `demonym`, `iso_code`) VALUES ('Zambia', 'Zambiano', 'ZMB');
 INSERT INTO `nationalities` (`name`, `demonym`, `iso_code`) VALUES ('Zimbabue', 'Zimbabuense', 'ZWE');
 
+INSERT INTO `status` (`name`,`description`) VALUES ('aproved', 'El prestamo ha sido aprobado.');
+INSERT INTO `status` (`name`,`description`) VALUES ('pending', 'El prestamo esta pendiente para su revisión.');
+INSERT INTO `status` (`name`,`description`) VALUES ('rejected', 'El prestamo ha sido rechazado por revisión.');
+INSERT INTO `status` (`name`,`description`) VALUES ('returned', 'El prestamo ha finalizado y se ha devuelto el libro con exito.');
+
 
 INSERT INTO `books` (`available`, `publication_date`, `id`, `synopsis`, `cover`, `isbn`, `publisher`, `title`) VALUES ('4', '1605-01-16', NULL, 'Las aventuras de un hidalgo que, influenciado por los libros de caballerías, decide convertirse en caballero andante y salir en busca de aventuras.', 'don_quijote.jpg', '978-1-56619-909-4', 'Francisco de Robles', 'Don Quijote de la Mancha'); 
 INSERT INTO `books` (`available`, `publication_date`, `id`, `synopsis`, `cover`, `isbn`, `publisher`, `title`) VALUES ('5', '1943-04-06', NULL, 'La historia de un piloto que, tras un accidente en el desierto del Sahara, encuentra a un pequeño príncipe venido de otro planeta.', 'el_principito.jpg', '978-1-56619-909-5', 'Reynal & Hitchcock', 'El Principito');

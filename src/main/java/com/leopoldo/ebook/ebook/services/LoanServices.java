@@ -11,9 +11,11 @@ import com.leopoldo.ebook.ebook.exeptions.ApiException;
 import com.leopoldo.ebook.ebook.mappers.LoanMapper;
 import com.leopoldo.ebook.ebook.models.Book;
 import com.leopoldo.ebook.ebook.models.Loan;
+import com.leopoldo.ebook.ebook.models.Status;
 import com.leopoldo.ebook.ebook.models.User;
 import com.leopoldo.ebook.ebook.repositories.IBookRepository;
 import com.leopoldo.ebook.ebook.repositories.ILoanRepository;
+import com.leopoldo.ebook.ebook.repositories.IStatusRepository;
 import com.leopoldo.ebook.ebook.repositories.IUserRepository;
 import com.leopoldo.ebook.ebook.services.interfaces.ILoanServices;
 import com.leopoldo.ebook.ebook.services.interfaces.ISendEmailServices;
@@ -26,6 +28,9 @@ public class LoanServices implements ILoanServices {
 
     @Autowired
     private IBookRepository br;
+
+    @Autowired
+    private IStatusRepository sr;
 
     @Autowired
     private ILoanRepository lr;
@@ -41,7 +46,7 @@ public class LoanServices implements ILoanServices {
 
         Book book = br.findById(loanCreateDto.getBookId()).orElseThrow(() -> new ApiException(ApiError.BOOK_BYID_NOT_FOUND));
         User user = ur.findById(loanCreateDto.getUserId()).orElseThrow(() -> new ApiException(ApiError.USER_BYID_NOT_FOUND));
-
+        Status  status = sr.findByName("pending").orElseThrow(() -> new ApiException(ApiError.STATUS_BYNAME_NOT_FOUND));
         
         if(book.getAvailable() == null || book.getAvailable() <= 0){
             throw new ApiException(ApiError.BOOK_NOT_AVAILABLE);
@@ -51,7 +56,7 @@ public class LoanServices implements ILoanServices {
                 .book(book)
                 .user(user)
                 .requestDate(LocalDateTime.now())
-                .status("pending")
+                .status(status)
                 .build();
 
         lr.save(loan);
@@ -69,9 +74,9 @@ public class LoanServices implements ILoanServices {
        
         Loan loan = lr.findById(loanId).orElseThrow(() -> new ApiException(ApiError.LOAN_BYID_NOT_FOUND));
         Book book = loan.getBook();
+        Status statusAproved = sr.findByName("aproved").orElseThrow(() -> new ApiException(ApiError.STATUS_BYNAME_NOT_FOUND));
 
-
-        if(!loan.getStatus().equals("pending")){
+        if(!loan.getStatus().getName().equals("pending")){
             throw new ApiException(ApiError.LOAN_VALIDATION_ERROR);
         }
 
@@ -79,7 +84,10 @@ public class LoanServices implements ILoanServices {
             throw new ApiException(ApiError.BOOK_NOT_AVAILABLE);
         }
         
-        loan.setStatus("aproved");
+        
+
+
+        loan.setStatus(statusAproved);
         loan.setLoanDate(LocalDateTime.now());
         loan.setReturnDate(LocalDateTime.now().plusDays(7));
         lr.save(loan);
@@ -100,12 +108,13 @@ public class LoanServices implements ILoanServices {
     public JsonApiResponse reject(Long loanId) {
        
         Loan loan = lr.findById(loanId).orElseThrow(() -> new ApiException(ApiError.LOAN_BYID_NOT_FOUND));
+        Status statusRejected = sr.findByName("rejected").orElseThrow(() -> new ApiException(ApiError.STATUS_BYNAME_NOT_FOUND));
 
-        if(!loan.getStatus().equals("pending")){
+        if(!loan.getStatus().getName().equals("pending")){
             throw new ApiException(ApiError.LOAN_VALIDATION_REJECTED_ERROR);
         }
 
-        loan.setStatus("rejected");
+        loan.setStatus(statusRejected);
         lr.save(loan);
 
         es.sendEmail(loan.getUser().getEmail(), "Rechazo de Préstamo", "Lamentamos informarle que su solicitud de préstamo del libro "+loan.getBook().getTitle()+" ha sido rechazada. Si tiene alguna pregunta o necesita más información, no dude en contactarnos.");
@@ -122,12 +131,12 @@ public class LoanServices implements ILoanServices {
 
         Loan loan = lr.findById(loanId).orElseThrow(() -> new ApiException(ApiError.LOAN_BYID_NOT_FOUND));
         Book book = loan.getBook();
-
-        if(!loan.getStatus().equals("aproved")){
+        Status statusReturned = sr.findByName("returned").orElseThrow(() -> new ApiException(ApiError.STATUS_BYNAME_NOT_FOUND));
+        if(!loan.getStatus().getName().equals("aproved")){
             throw new ApiException(ApiError.LOAN_VALIDATION_ERROR);
         }
 
-        loan.setStatus("returned");
+        loan.setStatus(statusReturned);
         lr.save(loan);
 
         book.setAvailable(book.getAvailable() + 1);
@@ -160,8 +169,6 @@ public class LoanServices implements ILoanServices {
         if(loans.isEmpty()){
             throw new ApiException(ApiError.LOAN_BYUSERID_NOT_FOUND);
         }
-
-      
         return JsonApiResponse.builder()
                 .code(HttpStatus.OK.value())
                 .message(HttpStatus.OK.getReasonPhrase())

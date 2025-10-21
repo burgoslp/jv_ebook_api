@@ -55,6 +55,7 @@ public class SpringSecutiryConfig {
                 .requestMatchers(HttpMethod.GET,"/api/v1/books/{id}").permitAll()
                 .requestMatchers(HttpMethod.GET,"/api/v1/books/count").permitAll()
                 .requestMatchers(HttpMethod.GET,"/api/v1/books/countByCategory").permitAll()
+                .requestMatchers(HttpMethod.GET,"/api/v1/status").permitAll()
 
                 //rutas solo para administradores
                 .requestMatchers(HttpMethod.DELETE, "/api/v1/users/{id}").hasRole("ADMIN") 

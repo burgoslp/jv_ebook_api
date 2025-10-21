@@ -9,7 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +30,10 @@ public class Loan {
     @JoinColumn(name="user_id")
     private User user;
 
+    @ManyToOne  
+    @JoinColumn(name="status_id")  
+    private Status status; // pending, aproved, rejected
+
     @ManyToOne
     @JoinColumn(name="book_id")
     private Book book;
@@ -44,7 +47,5 @@ public class Loan {
     @Column(columnDefinition = "DATETIME")
     private LocalDateTime returnDate;
 
-    @NotNull
-    @Column(length = 20)
-    private String status; // pending, aproved, rejected
+ 
 }

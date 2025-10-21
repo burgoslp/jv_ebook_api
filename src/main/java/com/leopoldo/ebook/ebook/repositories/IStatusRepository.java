@@ -3,9 +3,9 @@ import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import com.leopoldo.ebook.ebook.models.Role;
+import com.leopoldo.ebook.ebook.models.Status;
 
 @Repository
-public interface IRoleRepository extends CrudRepository<Role, Long> {
-    Optional<Role> findByName(String name);
+public interface IStatusRepository extends CrudRepository<Status,Long>{
+    Optional<Status> findByName(String name);
 }
