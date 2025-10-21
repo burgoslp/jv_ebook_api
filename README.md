@@ -91,7 +91,8 @@ La API permite exportar reportes en formato Excel con información sobre:
 - Reporte general
 
 ## Diagrama de la base de datos:
-<img width="1307" height="1139" alt="libros(4)" src="https://github.com/user-attachments/assets/c6735d01-e5f3-4182-a088-0e329fb04e61" />
+<img width="1307" height="1139" alt="libros" src="https://github.com/user-attachments/assets/bc66ef67-9ebf-405b-b2b9-9ae88b96aa62" />
+
 
 
 
